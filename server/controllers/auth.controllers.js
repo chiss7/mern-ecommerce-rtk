@@ -25,7 +25,7 @@ export const Auth = {
     }
   },
   register: async (req, res) => {
-    const { email, password, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName, isAdmin } = req.body;
     try {
       const oldUser = await User.findOne({ email });
       if (oldUser)
@@ -36,6 +36,7 @@ export const Auth = {
         name: `${firstName} ${lastName}`,
         email,
         password: hashed,
+        isAdmin 
       });
       const signed = signToken(user._id);
       return res.status(201).json({ result: user, signed });

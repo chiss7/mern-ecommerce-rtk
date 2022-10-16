@@ -104,9 +104,10 @@ export const Cart = () => {
               </div>
               <p>Taxes and shipping calculated at checkout</p>
               {user?.result?._id ? (
-                <PayButton cart={cart} />
+                //<PayButton cart={cart} />
+                <button onClick={() => navigate('/shipping')}>Proceed to Checkout</button>
               ) : (
-                <button onClick={() => navigate("/login")}>
+                <button onClick={() => navigate("/login?redirect=/shipping")}>
                   Login to Check out
                 </button>
               )}

@@ -17,10 +17,6 @@ const NavBar = () => {
     }
   }
 
-  const handleLogout = () => {
-    dispatch(setLogout());
-  };
-
   return (
     <nav className="nav-bar">
       <Link to="/">
@@ -44,15 +40,20 @@ const NavBar = () => {
         </div>
       </Link>
       {user?.result?._id ? (
-        <Link
-          to="/login"
-          onClick={() => {
-            dispatch(setLogout());
-            toast.warning("You have been logged out!");
-          }}
-        >
-          <div className="log-out">Logout</div>
-        </Link>
+        <>
+          <h4 className="log-out">{user.result.name}</h4>
+          <Link to="/">Profile</Link>
+          <Link to="/">History</Link>
+          <Link
+            to="/login"
+            onClick={() => {
+              dispatch(setLogout());
+              toast.warning("You have been logged out!");
+            }}
+          >
+            <div className="log-out">Logout</div>
+          </Link>
+        </>
       ) : (
         <div className="auth-links">
           <Link to="/login">Login</Link>

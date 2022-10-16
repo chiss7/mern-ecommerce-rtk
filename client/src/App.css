@@ -364,3 +364,24 @@
 .register-form button:hover {
   background: #2a9241;
 }
+
+/* Checkout Steps */
+.checkout-steps {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.checkout-steps div {
+  width: 15rem;
+  text-align: center;
+}
+
+.checkout-steps > div {
+  border-bottom: 0.2rem solid #a0a0a0;
+}
+
+.checkout-steps > div.active {
+  border-bottom: 0.2rem solid #f08000;
+  color: #f08000;
+}

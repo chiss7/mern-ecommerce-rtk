@@ -3,11 +3,20 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import NavBar from "./components/NavBar";
-import { Cart, CheckoutSuccess, Home, Login, NotFound, Register } from "./pages";
+import {
+  Cart,
+  CheckoutSuccess,
+  Home,
+  Login,
+  NotFound,
+  Register,
+  ShippingAddress,
+} from "./pages";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setUser } from "./redux/features/authSlice";
 import { getTotals } from "./redux/features/cartSlice";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,8 +24,8 @@ function App() {
   const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
-    dispatch(setUser(user))
-  }, [])
+    dispatch(setUser(user));
+  }, []);
 
   useEffect(() => {
     dispatch(getTotals());
@@ -29,9 +38,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/shipping"
+          element={
+            <PrivateRoute>
+              <ShippingAddress />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
