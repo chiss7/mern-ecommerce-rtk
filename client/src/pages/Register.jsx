@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { register } from "../redux/features/authSlice";
 import { toast } from "react-toastify";
 
 export const Register = () => {
+  // redirect to shipping page 
+  const location = useLocation();
+  const redirectInUrl = new URLSearchParams(location.search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
+
   const [formValue, setFormValue] = useState({
     firstName: "",
     lastName: "",
@@ -37,7 +42,7 @@ export const Register = () => {
       formValue.password &&
       formValue.confirmPassword
     ) {
-      dispatch(register({ formValue, navigate, toast }));
+      dispatch(register({ formValue, navigate, toast, redirect }));
     }
   };
 
@@ -80,7 +85,12 @@ export const Register = () => {
           required
           onChange={handleChange}
         />
-        {loading ? <button disabled>Submitting</button> : <button>Register</button>}
+        {loading ? (
+          <button disabled>Submitting</button>
+        ) : (
+          <button>Register</button>
+        )}
+        <p>Already have an account? <Link to={`/login?redirect=${redirect}`}>Login</Link></p>
       </form>
     </>
   );

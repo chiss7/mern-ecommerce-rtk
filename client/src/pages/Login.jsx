@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../redux/features/authSlice";
 import { toast } from "react-toastify";
 
 export const Login = () => {
+  // redirect to shipping page 
+  const location = useLocation();
+  const redirectInUrl = new URLSearchParams(location.search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
+
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -24,7 +29,7 @@ export const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formValue.email && formValue.password) {
-      dispatch(login({ formValue, navigate, toast }));
+      dispatch(login({ formValue, navigate, toast, redirect }));
     }
   };
 
@@ -47,6 +52,7 @@ export const Login = () => {
           onChange={handleChange}
         />
         {loading ? <button disabled>Submitting</button> : <button>Login</button>}
+        <p>New Customer? <Link to={`/register?redirect=${redirect}`}>Register</Link></p>
       </form>
     </>
   );

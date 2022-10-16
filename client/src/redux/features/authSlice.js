@@ -3,11 +3,11 @@ import { loginRequest, registerRequest } from "../api";
 
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+  async ({ formValue, navigate, toast, redirect }, { rejectWithValue }) => {
     try {
       const res = await loginRequest(formValue);
       toast.success("Login successfully");
-      navigate("/");
+      navigate(redirect || "/");
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -17,11 +17,11 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   "auth/register",
-  async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+  async ({ formValue, navigate, toast, redirect }, { rejectWithValue }) => {
     try {
       const res = await registerRequest(formValue);
       toast.success("Register successfully!");
-      navigate("/");
+      navigate(redirect || "/");
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
