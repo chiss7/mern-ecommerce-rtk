@@ -9,6 +9,7 @@ import {
   Home,
   Login,
   NotFound,
+  PlaceOrder,
   Register,
   ShippingAddress,
 } from "./pages";
@@ -45,6 +46,14 @@ function App() {
           element={
             <PrivateRoute>
               <ShippingAddress />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/place-order"
+          element={
+            <PrivateRoute>
+              <PlaceOrder />
             </PrivateRoute>
           }
         />

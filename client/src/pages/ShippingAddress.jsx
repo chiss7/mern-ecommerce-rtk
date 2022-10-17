@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { saveShippingAddress } from "../redux/features/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export const ShippingAddress = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { shippingAddress } = useSelector((state) => state.cart);
   const [formValue, setFormValue] = useState({
@@ -26,6 +28,7 @@ export const ShippingAddress = () => {
       formValue.country
     ) {
       dispatch(saveShippingAddress(formValue));
+      navigate('/place-order')
     }
   };
 
