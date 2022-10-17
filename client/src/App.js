@@ -9,6 +9,7 @@ import {
   Home,
   Login,
   NotFound,
+  Order,
   PlaceOrder,
   Register,
   ShippingAddress,
@@ -54,6 +55,14 @@ function App() {
           element={
             <PrivateRoute>
               <PlaceOrder />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <PrivateRoute>
+              <Order />
             </PrivateRoute>
           }
         />

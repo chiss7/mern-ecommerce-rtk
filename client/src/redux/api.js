@@ -18,5 +18,8 @@ export const getToursRequest = () => API.get("/product");
 export const loginRequest = (user) => API.post("/users/login", user);
 export const registerRequest = (user) => API.post("/users/register", user);
 
-export const createOrderRequest = async (cart) =>
-  await API.post("/payment/create-order", cart);
+/* export const createOrderRequest = async (cart) =>
+  await API.post("/payment/create-order", cart); */
+
+export const createOrderRequest = async (order) =>
+  await API.post("/orders", order);

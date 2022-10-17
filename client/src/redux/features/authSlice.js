@@ -43,6 +43,7 @@ const authSlice = createSlice({
     setLogout: (state, action) => {
       localStorage.removeItem("profile");
       localStorage.removeItem("shippingAddress");
+      localStorage.removeItem("orderSummary");
       state.user = null;
     },
   },

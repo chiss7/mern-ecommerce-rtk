@@ -1,5 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import { createOrderRequest } from "../api";
+
+export const createOrder = createAsyncThunk(
+  "cart/createOrder",
+  async ({ order, toast, navigate }, { rejectWithValue }) => {
+    try {
+      const res = await createOrderRequest(order);
+      toast.success("Order created successfully");
+      navigate(`/order/${res.data._id}`);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
@@ -12,7 +27,11 @@ const cartSlice = createSlice({
     shippingAddress: localStorage.getItem("shippingAddress")
       ? JSON.parse(localStorage.getItem("shippingAddress"))
       : {},
-    orderSummary: {},
+    orderSummary: localStorage.getItem("orderSummary")
+      ? JSON.parse(localStorage.getItem("orderSummary"))
+      : {},
+    error: "",
+    loading: false,
   },
   reducers: {
     addToCart: (state, action) => {
@@ -87,6 +106,25 @@ const cartSlice = createSlice({
     saveOrderSummary: (state, action) => {
       state.orderSummary = action.payload;
       localStorage.setItem("orderSummary", JSON.stringify(state.orderSummary));
+    },
+  },
+  extraReducers: {
+    [createOrder.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [createOrder.fulfilled]: (state, action) => {
+      state.loading = false;
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("shippingAddress");
+      localStorage.removeItem("orderSummary");
+      state.cartItems = [];
+      state.shippingAddress = {};
+      state.orderSummary = {};
+      state.error = "";
+    },
+    [createOrder.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
     },
   },
 });

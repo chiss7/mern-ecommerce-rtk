@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { saveOrderSummary } from "../redux/features/cartSlice";
+import { createOrder } from "../redux/features/cartSlice";
 
 export const PlaceOrder = () => {
+  const navigate = useNavigate();
   const { shippingAddress, cartItems, cartTotalAmount } = useSelector(
     (state) => state.cart
   );
@@ -14,7 +17,9 @@ export const PlaceOrder = () => {
   const shippingPrice = itemsPrice > 100 ? round2(0) : round2(10);
   const taxPrice = round2(0.12 * itemsPrice);
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
-  
+
+  const { loading, error } = useSelector((state) => state.cart);
+
   useEffect(() => {
     dispatch(
       saveOrderSummary({
@@ -25,6 +30,23 @@ export const PlaceOrder = () => {
       })
     );
   }, [dispatch, itemsPrice, shippingPrice, taxPrice, totalPrice]);
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
+  const order = {
+    orderItems: cartItems,
+    shippingAddress,
+    itemsPrice,
+    shippingPrice,
+    taxPrice,
+    totalPrice
+  }
+
+  const placeOrderHandler = () => {
+    dispatch(createOrder({order, toast, navigate}));
+  };
 
   return (
     <>
@@ -87,8 +109,9 @@ export const PlaceOrder = () => {
                 <p>${totalPrice}</p>
               </div>
               <div className="order-items">
-                <button>Place Order</button>
+                <button onClick={placeOrderHandler}>Place Order</button>
               </div>
+              {loading && <p>Loading...</p>}
             </div>
           </div>
         </div>

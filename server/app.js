@@ -5,6 +5,7 @@ import fileUpload from "express-fileupload";
 import productRoutes from "./routes/product.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import paymentRoutes from './routes/payment.routes.js'
+import orderRoutes from './routes/order.routes.js'
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(
 app.use("/users", authRoutes);
 app.use("/product", productRoutes);
 app.use("/payment", paymentRoutes);
+app.use("/orders", orderRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to online shop API");
 });

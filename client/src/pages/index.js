@@ -6,3 +6,4 @@ export { Register } from "./Register";
 export { CheckoutSuccess } from "./CheckoutSuccess";
 export { ShippingAddress } from "./ShippingAddress";
 export { PlaceOrder } from "./PlaceOrder";
+export { Order } from "./Order";
