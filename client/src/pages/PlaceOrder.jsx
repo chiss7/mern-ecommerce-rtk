@@ -21,6 +21,24 @@ export const PlaceOrder = () => {
   const { loading, error } = useSelector((state) => state.cart);
 
   useEffect(() => {
+    if (cartItems.length === 0) {
+      toast.warning("Please first select a product");
+      return navigate("/cart");
+    }
+    if (
+      !shippingAddress.fullName ||
+      !shippingAddress.country ||
+      !shippingAddress.city ||
+      !shippingAddress.address ||
+      !shippingAddress.postalCode
+    ) {
+      toast.warning("Please first select a shipping address");
+      return navigate("/shipping");
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     dispatch(
       saveOrderSummary({
         itemsPrice,
@@ -41,11 +59,11 @@ export const PlaceOrder = () => {
     itemsPrice,
     shippingPrice,
     taxPrice,
-    totalPrice
-  }
+    totalPrice,
+  };
 
   const placeOrderHandler = () => {
-    dispatch(createOrder({order, toast, navigate}));
+    dispatch(createOrder({ order, toast, navigate }));
   };
 
   return (
