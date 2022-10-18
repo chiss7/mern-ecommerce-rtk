@@ -12,7 +12,17 @@ export const placeOrder = {
         totalPrice: req.body.totalPrice,
         user: req.userId,
       });
-      res.status(201).json(newOrder)
+      res.status(201).json(newOrder);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(404).json({ message: "Something went wrong" });
+    }
+  },
+  getOrderById: async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+      if (!order) return res.status().json({ message: "Order not found" });
+      res.status(200).json(order);
     } catch (error) {
       console.log(error.message);
       return res.status(404).json({ message: "Something went wrong" });

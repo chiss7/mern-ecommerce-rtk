@@ -463,6 +463,22 @@
   letter-spacing: 1.15px;
 }
 
+.msg {
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.msg-danger {
+  background-color: #DC3545;
+}
+
+.msg-success {
+  background-color: #28A745;
+}
+
 @media screen and (max-width: 767px) {
   .info-container {
     flex-direction: column;

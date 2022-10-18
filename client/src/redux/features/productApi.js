@@ -9,7 +9,15 @@ export const productApi = createApi({
     getAllProducts: builder.query({
       query: () => "/product",
     }),
+    getOrderById: builder.query({
+      query: (id) => ({
+        url: `/orders/${id}`,
+        headers: {
+          'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("profile")).signed
+        }
+      })
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = productApi
+export const { useGetAllProductsQuery, useGetOrderByIdQuery } = productApi

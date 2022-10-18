@@ -5,5 +5,6 @@ import auth from "../middlewares/auth.js";
 const router = Router();
 
 router.post('/', auth, placeOrder.createOrder);
+router.get('/:id', auth, placeOrder.getOrderById);
 
 export default router;
