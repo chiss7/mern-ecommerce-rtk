@@ -61,6 +61,10 @@ export const Order = () => {
   };
 
   useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
+  useEffect(() => {
     if (!id || successPay || (id && id !== orderId)) {
       dispatch(getOrder(orderId));
       if (successPay) {
@@ -75,7 +79,7 @@ export const Order = () => {
   return loading ? (
     <h1>Loading ...</h1>
   ) : error ? (
-    <p>An error occurred {error.data.message}</p>
+    <p>An error occurred {error}</p>
   ) : (
     <>
       <div className="container">

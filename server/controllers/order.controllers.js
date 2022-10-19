@@ -28,6 +28,15 @@ export const placeOrder = {
       return res.status(500).json({ message: "Something went wrong" });
     }
   },
+  getOrdersByUser: async (req, res) => {
+    try {
+      const orders = await Order.find({ user: req.userId });
+      res.status(200).json(orders);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
   approvePay: async (req, res) => {
     try {
       const updatedOrder = await Order.findByIdAndUpdate(

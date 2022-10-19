@@ -10,6 +10,7 @@ import {
   Login,
   NotFound,
   Order,
+  OrderHistory,
   PlaceOrder,
   Register,
   ShippingAddress,
@@ -63,6 +64,14 @@ function App() {
           element={
             <PrivateRoute>
               <Order />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/order-history"
+          element={
+            <PrivateRoute>
+              <OrderHistory />
             </PrivateRoute>
           }
         />

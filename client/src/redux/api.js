@@ -26,8 +26,8 @@ export const createOrderRequest = async (order) =>
 
 export const getPayPalClientIdRequest = async () =>
   await API.get("/api/keys/paypal");
-
 export const approvePayPalRequest = async (details, id) =>
   await API.put(`orders/${id}/pay`, details);
 
 export const getOrderByIdRequest = async (id) => await API.get(`/orders/${id}`);
+export const getOrdersByUserRequest = async () => await API.get(`/orders/mine`);

@@ -5,6 +5,7 @@ import auth from "../middlewares/auth.js";
 const router = Router();
 
 router.post('/', auth, placeOrder.createOrder);
+router.get('/mine', auth, placeOrder.getOrdersByUser);
 router.get('/:id', auth, placeOrder.getOrderById);
 router.put('/:id/pay', auth, placeOrder.approvePay);
 

@@ -54,6 +54,25 @@
   margin-left: 2rem;
 }
 
+.logged-in {
+  display: flex;
+  
+}
+
+.logged-in h4 {
+  margin: 0 2rem;
+}
+
+.logged-in a {
+  margin: 0 0.7rem;
+}
+
+.cart-links-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Not Found */
 
 .not-found {
@@ -491,5 +510,85 @@
   }
   .order-container {
     width: 95%;
+  }
+}
+
+/* ORDER HISTORY */
+.orderhistory-container {
+  width: 100%;
+  max-width: 60rem;
+  margin: auto;
+}
+
+.orderhistory-container table {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+.orderhistory-container table caption {
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.orderhistory-container table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+}
+
+.orderhistory-container table th,
+.orderhistory-container table td {
+  font-size: 1rem;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.orderhistory-container table thead th {
+  text-transform: uppercase;
+  background-color: #ddd;
+}
+
+.orderhistory-container table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.orderhistory-container table tbody td:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 768px) {
+  .orderhistory-container table {
+    border: 0px;
+  }
+  .orderhistory-container table caption {
+    font-size: 1.5rem;
+  }
+  .orderhistory-container table thead {
+    display: none;
+  }
+  .orderhistory-container table tr {
+    margin-bottom: 0.7rem;
+    border-bottom: 4px solid #ddd;
+    display: block;
+  }
+  .orderhistory-container table th,
+  .orderhistory-container table td {
+    font-size: 0.9rem;
+  }
+  .orderhistory-container table td {
+    display: block;
+    border-bottom: 1px solid #ddd;
+    text-align: right;
+  }
+  .orderhistory-container table td:last-child {
+    border-bottom: 0px;
+  }
+  .orderhistory-container table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-transform: uppercase;
+    float: left;
   }
 }
