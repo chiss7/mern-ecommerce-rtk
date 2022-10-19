@@ -23,3 +23,11 @@ export const registerRequest = (user) => API.post("/users/register", user);
 
 export const createOrderRequest = async (order) =>
   await API.post("/orders", order);
+
+export const getPayPalClientIdRequest = async () =>
+  await API.get("/api/keys/paypal");
+
+export const approvePayPalRequest = async (details, id) =>
+  await API.put(`orders/${id}/pay`, details);
+
+export const getOrderByIdRequest = async (id) => await API.get(`/orders/${id}`);

@@ -1,9 +1,75 @@
 import { useParams } from "react-router-dom";
 import { useGetOrderByIdQuery } from "../redux/features/productApi";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { getPayPalClientIdRequest } from "../redux/api";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { approvePay, payReset } from "../redux/features/paySlice";
 
 export const Order = () => {
+  const dispatch = useDispatch();
   const { id: orderId } = useParams();
   const { data, error, isLoading } = useGetOrderByIdQuery(orderId);
+  const id = data?._id;
+  const totalPrice = data?.totalPrice;
+  const { successPay, loadingPay } = useSelector((state) => state.pay);
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  const loadPayPalScript = async () => {
+    try {
+      const res = await getPayPalClientIdRequest();
+      paypalDispatch({
+        type: "resetOptions",
+        value: {
+          "client-id": res.data,
+          currency: "USD",
+        },
+      });
+      paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const createOrder = (data, actions) => {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: { value: totalPrice },
+          },
+        ],
+      })
+      .then((orderID) => {
+        return orderID; // PayPal ORDER ID
+      });
+  };
+  const onApprove = (data, actions) => {
+    return actions.order.capture().then(async function (details) {
+      try {
+        dispatch(approvePay({ details, id }));
+        window.location.reload();
+        //toast.success("Order is paid");
+      } catch (error) {
+        toast.error(error);
+      }
+    });
+  };
+  const onError = (err) => {
+    toast.error(err);
+  };
+
+  useEffect(() => {
+    if (!id || successPay || (id && id !== orderId)) {
+      if (successPay) {
+        dispatch(payReset());
+      }
+    } else {
+      loadPayPalScript();
+    }
+    // eslint-disable-next-line
+  }, [id, successPay, dispatch, orderId]);
 
   return isLoading ? (
     <h1>Loading ...</h1>
@@ -22,7 +88,9 @@ export const Order = () => {
               {data.shippingAddress.city}, {data.shippingAddress.postalCode},{" "}
               {data.shippingAddress.address} <br />
               {data.isDelivered ? (
-                <div>Delivered at {data.deliveredAt}</div>
+                <div className="msg msg-success">
+                  Delivered at {data.deliveredAt}
+                </div>
               ) : (
                 <div className="msg msg-danger">Not Delivered</div>
               )}
@@ -31,7 +99,7 @@ export const Order = () => {
               <h2>Payment</h2>
               <strong>Method: </strong> PayPal
               {data.isPaid ? (
-                <div>Paid at {data.paidAt}</div>
+                <div className="msg msg-success">Paid at {data.paidAt}</div>
               ) : (
                 <div className="msg msg-danger">Not Paid</div>
               )}
@@ -76,9 +144,22 @@ export const Order = () => {
                 <h4>Order Total</h4>
                 <p>${data.totalPrice}</p>
               </div>
-              <div className="order-items">
-                <button>Place Order</button>
-              </div>
+              {!data.isPaid && (
+                <>
+                  {isPending ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <div>
+                      <PayPalButtons
+                        createOrder={createOrder}
+                        onApprove={onApprove}
+                        onError={onError}
+                      ></PayPalButtons>
+                    </div>
+                  )}
+                  {loadingPay && <p>Loading...</p>}
+                </>
+              )}
             </div>
           </div>
         </div>

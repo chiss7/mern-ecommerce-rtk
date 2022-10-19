@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { createOrderRequest } from "../api";
+import { createOrderRequest, getOrderByIdRequest } from "../api";
 
 export const createOrder = createAsyncThunk(
   "cart/createOrder",
