@@ -1,18 +1,18 @@
 import { useParams } from "react-router-dom";
-import { useGetOrderByIdQuery } from "../redux/features/productApi";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { getPayPalClientIdRequest } from "../redux/api";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { approvePay, payReset } from "../redux/features/paySlice";
+import { getOrder } from "../redux/features/orderSlice";
 
 export const Order = () => {
   const dispatch = useDispatch();
   const { id: orderId } = useParams();
-  const { data, error, isLoading } = useGetOrderByIdQuery(orderId);
-  const id = data?._id;
-  const totalPrice = data?.totalPrice;
+  const { order, loading, error } = useSelector((state) => state.order);
+  const id = order?._id;
+  const totalPrice = order?.totalPrice;
   const { successPay, loadingPay } = useSelector((state) => state.pay);
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -49,8 +49,8 @@ export const Order = () => {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch(approvePay({ details, id }));
-        window.location.reload();
-        //toast.success("Order is paid");
+        //window.location.reload();
+        toast.success("Order is paid");
       } catch (error) {
         toast.error(error);
       }
@@ -62,6 +62,7 @@ export const Order = () => {
 
   useEffect(() => {
     if (!id || successPay || (id && id !== orderId)) {
+      dispatch(getOrder(orderId));
       if (successPay) {
         dispatch(payReset());
       }
@@ -71,25 +72,25 @@ export const Order = () => {
     // eslint-disable-next-line
   }, [id, successPay, dispatch, orderId]);
 
-  return isLoading ? (
+  return loading ? (
     <h1>Loading ...</h1>
   ) : error ? (
     <p>An error occurred {error.data.message}</p>
   ) : (
     <>
       <div className="container">
-        <h1>Order #{data._id}</h1>
+        <h1>Order #{order._id}</h1>
         <div className="info-container">
           <div className="elements-info">
             <div className="shipping-container box">
               <h2>Shipping</h2>
-              <strong>Name: </strong> {data.shippingAddress.fullName} <br />
-              <strong>Address: </strong> {data.shippingAddress.country},{" "}
-              {data.shippingAddress.city}, {data.shippingAddress.postalCode},{" "}
-              {data.shippingAddress.address} <br />
-              {data.isDelivered ? (
+              <strong>Name: </strong> {order?.shippingAddress?.fullName} <br />
+              <strong>Address: </strong> {order?.shippingAddress?.country},{" "}
+              {order?.shippingAddress?.city}, {order?.shippingAddress?.postalCode},{" "}
+              {order?.shippingAddress?.address} <br />
+              {order?.isDelivered ? (
                 <div className="msg msg-success">
-                  Delivered at {data.deliveredAt}
+                  Delivered at {order.deliveredAt}
                 </div>
               ) : (
                 <div className="msg msg-danger">Not Delivered</div>
@@ -98,15 +99,15 @@ export const Order = () => {
             <div className="payment-container box">
               <h2>Payment</h2>
               <strong>Method: </strong> PayPal
-              {data.isPaid ? (
-                <div className="msg msg-success">Paid at {data.paidAt}</div>
+              {order.isPaid ? (
+                <div className="msg msg-success">Paid at {order.paidAt}</div>
               ) : (
                 <div className="msg msg-danger">Not Paid</div>
               )}
             </div>
             <div className="products-container box">
               <h2>Products</h2>
-              {data.orderItems.map((product) => (
+              {order?.orderItems?.map((product) => (
                 <div className="product-card" key={product._id}>
                   <div className="cart-product">
                     <img src={product.image.url} alt={product.name} />
@@ -130,26 +131,26 @@ export const Order = () => {
             <div className="order-container_items">
               <div className="order-items">
                 <h4>Products</h4>
-                <p>${data.itemsPrice}</p>
+                <p>${order.itemsPrice}</p>
               </div>
               <div className="order-items">
                 <h4>Shipping</h4>
-                <p>${data.shippingPrice}</p>
+                <p>${order.shippingPrice}</p>
               </div>
               <div className="order-items">
                 <h4>Tax</h4>
-                <p>${data.taxPrice}</p>
+                <p>${order.taxPrice}</p>
               </div>
               <div className="order-items">
                 <h4>Order Total</h4>
-                <p>${data.totalPrice}</p>
+                <p>${order.totalPrice}</p>
               </div>
-              {!data.isPaid && (
+              {!order.isPaid && (
                 <>
                   {isPending ? (
                     <p>Loading...</p>
                   ) : (
-                    <div>
+                    <div className="paypal-button">
                       <PayPalButtons
                         createOrder={createOrder}
                         onApprove={onApprove}

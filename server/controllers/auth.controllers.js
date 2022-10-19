@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
 
-const signToken = (_id) => jwt.sign({ _id }, SECRET, { expiresIn: "1h" });
+const signToken = (_id) => jwt.sign({ _id }, SECRET, { expiresIn: "5h" });
 
 export const Auth = {
   login: async (req, res) => {
