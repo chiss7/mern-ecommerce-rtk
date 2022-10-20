@@ -50,7 +50,7 @@
   color: white;
 }
 
-.auth-links a:last-child {
+.auth-links a {
   margin-left: 2rem;
 }
 

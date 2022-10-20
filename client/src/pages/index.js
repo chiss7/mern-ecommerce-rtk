@@ -8,3 +8,4 @@ export { ShippingAddress } from "./ShippingAddress";
 export { PlaceOrder } from "./PlaceOrder";
 export { Order } from "./Order";
 export { OrderHistory } from "./OrderHistory";
+export { Profile } from "./Profile";

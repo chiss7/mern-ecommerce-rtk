@@ -43,7 +43,7 @@ const NavBar = () => {
         {user?.result?._id ? (
           <div className="logged-in">
             <h4 className="log-out">{user.result.name}</h4>
-            <Link to="/">Profile</Link>
+            <Link to="/profile">Profile</Link>
             <Link to="/order-history">Order History</Link>
             <Link
               to="/login"

@@ -12,6 +12,7 @@ import {
   Order,
   OrderHistory,
   PlaceOrder,
+  Profile,
   Register,
   ShippingAddress,
 } from "./pages";
@@ -72,6 +73,14 @@ function App() {
           element={
             <PrivateRoute>
               <OrderHistory />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
         />
