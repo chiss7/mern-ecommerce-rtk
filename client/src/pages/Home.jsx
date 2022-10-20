@@ -31,6 +31,10 @@ export const Home = () => {
                   <span>{product.description}</span>
                   <span className="price">${product.price}</span>
                 </div>
+                <div>
+                  <span>Category: {product.category}</span><br />
+                  <span>Rating: {product.rating} stars</span>
+                </div>
                 <button onClick={() => handleAddToCart(product)}>
                   Add To Cart
                 </button>
@@ -42,4 +46,3 @@ export const Home = () => {
     </div>
   );
 };
-

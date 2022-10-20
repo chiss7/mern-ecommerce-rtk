@@ -592,3 +592,39 @@
     float: left;
   }
 }
+
+/* ADMIN */
+/* DASHBOARD */
+.dashboard {
+  display: flex;
+  height: 89vh;
+}
+
+.side-nav {
+  border-right: 1px solid gray;
+  height: calc(100vh - 70px);
+  position: fixed;
+  overflow-y: auto;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.side-nav h3{
+  margin: 0 0 1rem 0;
+  padding: 0;
+  text-transform: uppercase;
+  font-size: 17px;
+}
+.side-nav a{
+  text-decoration: none;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.dashboard-content {
+  margin-left: 200px;
+  padding: 2rem 3rem;
+  width: 100%;
+}

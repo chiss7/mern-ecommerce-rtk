@@ -3,18 +3,24 @@ import "react-toastify/dist/ReactToastify.css";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import NavBar from "./components/NavBar";
+import AdminRoute from "./components/AdminRoute";
 import {
   Cart,
   CheckoutSuccess,
+  Dashboard,
   Home,
   Login,
   NotFound,
   Order,
   OrderHistory,
+  Orders,
   PlaceOrder,
+  Products,
   Profile,
   Register,
   ShippingAddress,
+  Summary,
+  Users,
 } from "./pages";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -84,7 +90,48 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/checkout-success" element={<CheckoutSuccess />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        >
+          <Route
+            path="summary"
+            element={
+              <AdminRoute>
+                <Summary />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="products"
+            element={
+              <AdminRoute>
+                <Products />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="orders"
+            element={
+              <AdminRoute>
+                <Orders />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <AdminRoute>
+                <Users />
+              </AdminRoute>
+            }
+          />
+        </Route>
+        {/* <Route path="/checkout-success" element={<CheckoutSuccess />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

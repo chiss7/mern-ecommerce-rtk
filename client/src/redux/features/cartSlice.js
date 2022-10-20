@@ -39,6 +39,10 @@ const cartSlice = createSlice({
         (item) => item._id === action.payload._id
       );
       if (itemIndex >= 0) {
+        if(state.cartItems[itemIndex].cartQuantity === state.cartItems[itemIndex].countInStock){
+          toast.error(`${state.cartItems[itemIndex].name} out of stock!`)
+          return;
+        }
         state.cartItems[itemIndex].cartQuantity += 1;
         toast.info(
           `${state.cartItems[itemIndex].name} increased to cart quantity!`
