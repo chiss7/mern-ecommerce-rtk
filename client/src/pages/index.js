@@ -14,3 +14,4 @@ export { Products } from "./admin/Products";
 export { Orders } from "./admin/Orders";
 export { Users } from "./admin/Users";
 export { Summary } from "./admin/Summary";
+export { CreateProduct } from "./admin/CreateProduct";

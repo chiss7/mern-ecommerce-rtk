@@ -73,6 +73,15 @@
   align-items: center;
 }
 
+@media screen and (max-width: 665px) {
+  .nav-bar {
+    padding: 0 1rem;
+  }
+  .nav-bar h2{
+    font-size: 30px;
+  }
+}
+
 /* Not Found */
 
 .not-found {
@@ -627,4 +636,11 @@
   margin-left: 200px;
   padding: 2rem 3rem;
   width: 100%;
+}
+
+.link-active {
+  color: #4b70e2;
+}
+.link-inactive {
+  color: rgb(97, 97, 97);
 }
