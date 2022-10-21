@@ -4,6 +4,7 @@ import cartReducer from "./features/cartSlice";
 import authReducer from "./features/authSlice";
 import payReducer from "./features/paySlice";
 import orderReducer from "./features/orderSlice";
+import productReducer from "./features/productSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     pay: payReducer,
     order: orderReducer,
+    product: productReducer,
     [productApi.reducerPath]: productApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

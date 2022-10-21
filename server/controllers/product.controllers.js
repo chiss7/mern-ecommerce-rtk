@@ -1,6 +1,6 @@
 import Product from "../models/Product.js";
 import fs from "fs-extra";
-import { uploadImage, deleteImage } from "../libs/cloudinary.js";
+import { uploadImage } from "../libs/cloudinary.js";
 
 const ProductController = {
   getProducts: async (req, res) => {
