@@ -2,9 +2,8 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
-import { response } from "express";
 
-const signToken = (_id) => jwt.sign({ _id }, SECRET, { expiresIn: "5h" });
+const signToken = (_id, isAdmin) => jwt.sign({ _id, isAdmin }, SECRET, { expiresIn: "5h" });
 
 export const Auth = {
   login: async (req, res) => {
@@ -15,7 +14,7 @@ export const Auth = {
         return res.status(404).json({ message: "User doesn't exists" });
       const isMatch = await bcrypt.compare(password, oldUser.password);
       if (isMatch) {
-        const signed = signToken(oldUser._id);
+        const signed = signToken(oldUser._id, oldUser.isAdmin);
         return res.status(200).json({ result: oldUser, signed });
       } else {
         return res.status(400).json({ message: "Invalid password" });
@@ -39,7 +38,7 @@ export const Auth = {
         password: hashed,
         isAdmin,
       });
-      const signed = signToken(user._id);
+      const signed = signToken(user._id, user.isAdmin);
       return res.status(201).json({ result: user, signed });
     } catch (error) {
       console.log(error.message);
@@ -58,7 +57,7 @@ export const Auth = {
           user.password = hashed;
         }
         const updatedUser = await user.save();
-        const signed = signToken(updatedUser._id);
+        const signed = signToken(updatedUser._id, updatedUser.isAdmin);
         return res.json({ result: updatedUser, signed });
       }
       return res.status(404).json({ message: "User not found" });

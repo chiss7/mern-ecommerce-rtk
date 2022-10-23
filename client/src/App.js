@@ -6,7 +6,6 @@ import NavBar from "./components/NavBar";
 import AdminRoute from "./components/AdminRoute";
 import {
   Cart,
-  CheckoutSuccess,
   CreateProduct,
   Dashboard,
   Home,
