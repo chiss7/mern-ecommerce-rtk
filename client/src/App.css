@@ -703,3 +703,73 @@
 .image-preview img {
   max-width: 100%;
 }
+
+/* SUMMARY */
+.summary {
+  width: 100%;
+  display: flex;
+}
+
+.main-stats {
+  flex: 2;
+  width: 100%;
+}
+
+.summary-title p {
+  font-size: 14px;
+  color: rgba(234, 234, 255, 0.68);
+}
+
+.overview {
+  background-color: rgb(48, 51, 78);
+  color: rgba(234, 234, 255, 0.87);
+  width: 100%;
+  padding: 1.5rem;
+  height: 170px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.widget-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.side-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+  width: 100%;
+}
+
+.widget {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  /* color: ${({color}) => color}; */
+  /* background-color: ${({bgcolor}) => bgcolor}; */
+  border-radius: 3px;
+  font-size: 20px;
+}
+
+.text h3 {
+  font-weight: 900;
+}
+.text p {
+  font-size: 14px;
+  color: rgba(234, 234, 255, 0.68);
+}
+
+.percentage {
+  margin-left: 0.5rem;
+  font-size: 14px;
+  /* color: ${({isPositive}) => isPositive ? "rgb(114, 225, 40) : "rgb(255, 77, 73)"}; */
+}
