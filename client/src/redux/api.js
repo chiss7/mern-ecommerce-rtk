@@ -16,15 +16,16 @@ API.interceptors.request.use((req) => {
 export const getToursRequest = () => API.get("/product");
 export const createProductRequest = (form) => {
   const product = new FormData();
-  for (let key in form){
-    product.append(key, form[key])
+  for (let key in form) {
+    product.append(key, form[key]);
   }
   return API.post("/product", product);
-}
+};
 
 export const loginRequest = (user) => API.post("/users/login", user);
 export const registerRequest = (user) => API.post("/users/register", user);
 export const updateUserRequest = (values) => API.put("/users/profile", values);
+export const getUserStatsRequest = () => API.get("/users/stats");
 
 /* export const createOrderRequest = async (cart) =>
   await API.post("/payment/create-order", cart); */

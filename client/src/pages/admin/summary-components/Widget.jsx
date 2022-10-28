@@ -12,11 +12,11 @@ function Widget({ data }) {
       </div>
       {data.percentage < 0 ? (
         <>
-          <div className="percentage">{Math.floor(data.percentage) + "%"}</div>
+          <div className="percentage" style={{color: 'rgb(255, 77, 73)'}}>{Math.floor(data.percentage) + "%"}</div>
         </>
       ) : (
         <>
-          <div className="percentage">{Math.floor(data.percentage) + "%"}</div>
+          <div className="percentage" style={{color: 'rgb(114, 225, 40)'}}>{Math.floor(data.percentage) + "%"}</div>
         </>
       )}
     </div>

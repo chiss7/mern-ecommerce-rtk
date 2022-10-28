@@ -1,16 +1,45 @@
+import { useState, useEffect } from "react";
 import { FaUsers, FaChartBar, FaClipboard } from "react-icons/fa";
+import { getUserStatsRequest } from "../../redux/api";
 import Widget from "./summary-components/Widget";
 
 export const Summary = () => {
+  const [users, setUsers] = useState([]);
+  const [usersPerc, setUsersPerc] = useState(0);
+
+  const compare = (a, b) => {
+    if (a._id < b._id) {
+      return 1;
+    }
+    if (a._id > b._id) {
+      return -1;
+    }
+    return 0;
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getUserStatsRequest();
+        res.data.sort(compare);
+        setUsers(res.data);
+        setUsersPerc(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchData();
+  }, []);
+
   const data = [
     {
       icon: <FaUsers />,
-      digits: 50,
+      digits: users[0]?.total,
       isMoney: false,
       title: "Users",
       color: "rgb(102, 108, 255)",
       bgcolor: "rgba(102, 108, 255, 0.12)",
-      percentage: 30,
+      percentage: usersPerc,
     },
     {
       icon: <FaClipboard />,
@@ -28,7 +57,7 @@ export const Summary = () => {
       title: "Earnings",
       color: "rgb(253, 181, 40)",
       bgcolor: "rgba(253, 181, 40, 0.12)",
-      percentage: 60,
+      percentage: -60,
     },
   ];
   return (

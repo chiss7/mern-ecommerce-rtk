@@ -771,5 +771,4 @@
 .percentage {
   margin-left: 0.5rem;
   font-size: 14px;
-  /* color: ${({isPositive}) => isPositive ? "rgb(114, 225, 40) : "rgb(255, 77, 73)"}; */
 }

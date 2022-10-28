@@ -2,8 +2,10 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
+import moment from "moment";
 
-const signToken = (_id, isAdmin) => jwt.sign({ _id, isAdmin }, SECRET, { expiresIn: "5h" });
+const signToken = (_id, isAdmin) =>
+  jwt.sign({ _id, isAdmin }, SECRET, { expiresIn: "5h" });
 
 export const Auth = {
   login: async (req, res) => {
@@ -61,6 +63,34 @@ export const Auth = {
         return res.json({ result: updatedUser, signed });
       }
       return res.status(404).json({ message: "User not found" });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+  getStats: async (req, res) => {
+    const previousMonth = moment()
+      .month(moment().month() - 1)
+      .set("date", 1)
+      .format("YYYY-MM-DD HH:mm:ss");
+    try {
+      const users = await User.aggregate([
+        {
+          $match: { createdAt: { $gte: new Date(previousMonth) } },
+        },
+        {
+          $project: {
+            month: { $month: "$createdAt" },
+          },
+        },
+        {
+          $group: {
+            _id: "$month",
+            total: { $sum: 1 },
+          },
+        },
+      ]);
+      return res.status(200).json(users);
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ message: "Something went wrong" });
