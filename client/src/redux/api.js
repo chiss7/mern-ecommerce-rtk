@@ -40,3 +40,5 @@ export const approvePayPalRequest = async (details, id) =>
 
 export const getOrderByIdRequest = async (id) => await API.get(`/orders/${id}`);
 export const getOrdersByUserRequest = async () => await API.get(`/orders/mine`);
+export const getOrderStatsRequest = () => API.get("/orders/stats");
+export const getIncomeStatsRequest = () => API.get("/orders/income/stats");

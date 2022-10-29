@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { FaUsers, FaChartBar, FaClipboard } from "react-icons/fa";
-import { getUserStatsRequest } from "../../redux/api";
+import { getIncomeStatsRequest, getOrderStatsRequest, getUserStatsRequest } from "../../redux/api";
 import Widget from "./summary-components/Widget";
 
 export const Summary = () => {
   const [users, setUsers] = useState([]);
   const [usersPerc, setUsersPerc] = useState(0);
+  const [orders, setOrders] = useState([]);
+  const [ordersPerc, setOrdersPerc] = useState(0);
+  const [income, setIncome] = useState([]);
+  const [incomePerc, setIncomePerc] = useState(0);
 
   const compare = (a, b) => {
     if (a._id < b._id) {
@@ -31,6 +35,34 @@ export const Summary = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getOrderStatsRequest()
+        res.data.sort(compare);
+        setOrders(res.data);
+        setOrdersPerc(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getIncomeStatsRequest()
+        res.data.sort(compare);
+        setIncome(res.data);
+        setIncomePerc(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchData();
+  }, []);
+
   const data = [
     {
       icon: <FaUsers />,
@@ -43,21 +75,21 @@ export const Summary = () => {
     },
     {
       icon: <FaClipboard />,
-      digits: 70,
+      digits: orders[0]?.total,
       isMoney: false,
       title: "Orders",
       color: "rgb(38, 198, 249)",
       bgcolor: "rgba(38, 198, 249, 0.12)",
-      percentage: 20,
+      percentage: ordersPerc,
     },
     {
       icon: <FaChartBar />,
-      digits: 5000,
+      digits: income[0]?.total,
       isMoney: true,
       title: "Earnings",
       color: "rgb(253, 181, 40)",
       bgcolor: "rgba(253, 181, 40, 0.12)",
-      percentage: -60,
+      percentage: incomePerc,
     },
   ];
   return (
