@@ -772,3 +772,21 @@
   margin-left: 0.5rem;
   font-size: 14px;
 }
+
+/* Chart */
+.chart {
+  width: 100%;
+  height: 300px;
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 2px solid rgba(48, 51, 78, 0.2);
+  border-radius: 5px;
+}
+
+.chart h3 {
+  margin-bottom: 1rem;
+}
+
+.loader {
+  margin-top: 2rem;
+}

@@ -8,6 +8,7 @@ router.post("/", auth, placeOrder.createOrder);
 router.get("/mine", auth, placeOrder.getOrdersByUser);
 router.get("/stats", isAdmin, placeOrder.getStats);
 router.get("/income/stats", isAdmin, placeOrder.getIncomeStats);
+router.get("/week-sales", placeOrder.getWeekSales);
 router.get("/:id", auth, placeOrder.getOrderById);
 router.put("/:id/pay", auth, placeOrder.approvePay);
 

@@ -98,7 +98,10 @@ export const placeOrder = {
     try {
       const income = await Order.aggregate([
         {
-          $match: { createdAt: { $gte: new Date(previousMonth) } },
+          $match: { 
+            createdAt: { $gte: new Date(previousMonth) },
+            isPaid: true, 
+          },
         },
         {
           $project: {
@@ -109,6 +112,37 @@ export const placeOrder = {
         {
           $group: {
             _id: "$month",
+            total: { $sum: "$sales" },
+          },
+        },
+      ]);
+      return res.status(200).json(income);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+  getWeekSales: async (req, res) => {
+    const last7Days = moment()
+      .day(moment().day() - 7)
+      .format("YYYY-MM-DD HH:mm:ss");
+    try {
+      const income = await Order.aggregate([
+        {
+          $match: { 
+            createdAt: { $gte: new Date(last7Days) },
+            isPaid: true, 
+          },
+        },
+        {
+          $project: {
+            day: { $dayOfWeek: "$createdAt" },
+            sales: "$totalPrice",
+          },
+        },
+        {
+          $group: {
+            _id: "$day",
             total: { $sum: "$sales" },
           },
         },

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { FaUsers, FaChartBar, FaClipboard } from "react-icons/fa";
 import { getIncomeStatsRequest, getOrderStatsRequest, getUserStatsRequest } from "../../redux/api";
+import Chart from "./summary-components/Chart";
 import Widget from "./summary-components/Widget";
+import { toast } from "react-toastify";
 
 export const Summary = () => {
   const [users, setUsers] = useState([]);
@@ -29,7 +31,7 @@ export const Summary = () => {
         setUsers(res.data);
         setUsersPerc(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     }
     fetchData();
@@ -43,7 +45,7 @@ export const Summary = () => {
         setOrders(res.data);
         setOrdersPerc(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     }
     fetchData();
@@ -57,7 +59,7 @@ export const Summary = () => {
         setIncome(res.data);
         setIncomePerc(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100);
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     }
     fetchData();
@@ -84,7 +86,7 @@ export const Summary = () => {
     },
     {
       icon: <FaChartBar />,
-      digits: income[0]?.total,
+      digits: income[0]?.total ? income[0]?.total : "",
       isMoney: true,
       title: "Earnings",
       color: "rgb(253, 181, 40)",
@@ -94,7 +96,7 @@ export const Summary = () => {
   ];
   return (
     <div className="summary">
-      <div className="main-starts">
+      <div className="main-stats">
         <div className="overview">
           <div className="summary-title">
             <h2>Overview</h2>
@@ -106,8 +108,9 @@ export const Summary = () => {
             ))}
           </div>
         </div>
+        <Chart />
       </div>
-      <div className="side-starts"></div>
+      <div className="side-stats"></div>
     </div>
   );
 };
