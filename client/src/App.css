@@ -10,6 +10,8 @@
 /* Nav Bar */
 
 .nav-bar {
+  position: sticky;
+  top: 0;
   height: 70px;
   background-color: black;
   display: flex;
@@ -635,7 +637,6 @@
   flex-direction: column;
   padding: 2rem;
 }
-
 .side-nav h3{
   margin: 0 0 1rem 0;
   padding: 0;
@@ -646,6 +647,13 @@
   text-decoration: none;
   margin-bottom: 1rem;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+.side-nav a svg {
+  margin-right: 0.5rem;
+  font-size: 18px;
 }
 
 .dashboard-content {
@@ -656,6 +664,9 @@
 
 .link-active {
   color: #4b70e2;
+  border-left: 3px solid #4b70e2;
+  padding-left: 5px;
+  border-radius: 2px;
 }
 .link-inactive {
   color: rgb(97, 97, 97);
@@ -754,8 +765,6 @@
 .icon {
   margin-right: 0.5rem;
   padding: 0.5rem;
-  /* color: ${({color}) => color}; */
-  /* background-color: ${({bgcolor}) => bgcolor}; */
   border-radius: 3px;
   font-size: 20px;
 }
@@ -789,4 +798,57 @@
 
 .loader {
   margin-top: 2rem;
+}
+
+/* Transactions */
+.transactions {
+  background-color: rgb(48, 51, 78);
+  color: rgba(234, 234, 255, 0.87);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.transaction {
+  display: flex;
+  font-size: 14px;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 3px;
+  background-color: rgba(38, 198, 249, 0.12);
+}
+.transaction p{
+  flex: 1;
+}
+.transaction:nth-child(even){
+  background-color: rgba(102, 108, 255, 0.12);
+}
+
+/* All Time Data */
+.all-data-main {
+  background-color: rgb(48, 51, 78);
+  color: rgba(234, 234, 255, 0.87);
+  margin-top: 1.5rem;
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 14px;
+}
+
+.all-data-info {
+  display: flex;
+  margin-top: 1rem;
+  padding: 0.3rem;
+  border-radius: 3px;
+  background-color: rgba(38, 198, 249, 0.12);
+}
+.all-data-info:nth-child(even) {
+  background-color: rgba(102, 108, 255, 0.12);
+}
+
+.all-data-title {
+  flex: 1;
+}
+
+.all-data-data {
+  flex: 1;
+  font-weight: 700;
 }

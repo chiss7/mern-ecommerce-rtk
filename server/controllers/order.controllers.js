@@ -2,6 +2,20 @@ import Order from "../models/Order.js";
 import moment from "moment";
 
 export const placeOrder = {
+  getOrders: async (req, res) => {
+    const query = req.query.new;
+    try {
+      const orders = query
+        ? await Order.find().sort({ _id: -1 }).limit(4)
+        : await Order.find().sort({ _id: -1 });
+      //console.log(orders);
+      if (!orders) return res.status(404).json({ message: "There is no order yet" });
+      res.status(200).json(orders);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
   createOrder: async (req, res) => {
     try {
       const newOrder = await Order.create({
@@ -98,9 +112,9 @@ export const placeOrder = {
     try {
       const income = await Order.aggregate([
         {
-          $match: { 
+          $match: {
             createdAt: { $gte: new Date(previousMonth) },
-            isPaid: true, 
+            isPaid: true,
           },
         },
         {
@@ -129,9 +143,9 @@ export const placeOrder = {
     try {
       const income = await Order.aggregate([
         {
-          $match: { 
+          $match: {
             createdAt: { $gte: new Date(last7Days) },
-            isPaid: true, 
+            isPaid: true,
           },
         },
         {

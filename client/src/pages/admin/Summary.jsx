@@ -4,6 +4,8 @@ import { getIncomeStatsRequest, getOrderStatsRequest, getUserStatsRequest } from
 import Chart from "./summary-components/Chart";
 import Widget from "./summary-components/Widget";
 import { toast } from "react-toastify";
+import Transactions from "./summary-components/Transactions";
+import AllTimeData from "./summary-components/AllTimeData";
 
 export const Summary = () => {
   const [users, setUsers] = useState([]);
@@ -110,7 +112,10 @@ export const Summary = () => {
         </div>
         <Chart />
       </div>
-      <div className="side-stats"></div>
+      <div className="side-stats">
+        <Transactions />
+        <AllTimeData />
+      </div>
     </div>
   );
 };

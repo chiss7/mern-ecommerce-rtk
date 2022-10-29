@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import { setUser } from "./redux/features/authSlice";
 import { getTotals } from "./redux/features/cartSlice";
 import PrivateRoute from "./components/PrivateRoute";
+import ProductList from "./pages/admin/list/ProductList";
 
 function App() {
   const dispatch = useDispatch();
@@ -115,6 +116,14 @@ function App() {
               </AdminRoute>
             }
           >
+            <Route
+              index
+              element={
+                <AdminRoute>
+                  <ProductList />
+                </AdminRoute>
+              }
+            />
             <Route
               path="new"
               element={

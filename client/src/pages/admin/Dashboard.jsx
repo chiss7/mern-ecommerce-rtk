@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { FaUsers, FaStore, FaClipboard, FaTachometerAlt } from "react-icons/fa";
 
 export const Dashboard = () => {
   return (
@@ -11,7 +12,7 @@ export const Dashboard = () => {
             isActive ? "link-active" : "link-inactive"
           }
         >
-          Summary
+          <FaTachometerAlt /> Summary
         </NavLink>
         <NavLink
           to="/admin/products"
@@ -19,7 +20,7 @@ export const Dashboard = () => {
             isActive ? "link-active" : "link-inactive"
           }
         >
-          Products
+          <FaStore /> Products
         </NavLink>
         <NavLink
           to="/admin/orders"
@@ -27,7 +28,7 @@ export const Dashboard = () => {
             isActive ? "link-active" : "link-inactive"
           }
         >
-          Orders
+          <FaClipboard /> Orders
         </NavLink>
         <NavLink
           to="/admin/users"
@@ -35,7 +36,7 @@ export const Dashboard = () => {
             isActive ? "link-active" : "link-inactive"
           }
         >
-          Users
+          <FaUsers /> Users
         </NavLink>
       </div>
       <div className="dashboard-content">

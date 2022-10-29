@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginRequest, registerRequest, updateUserRequest } from "../api";
+import { getUsersRequest, loginRequest, registerRequest, updateUserRequest } from "../api";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -43,12 +43,25 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const getUsers = createAsyncThunk(
+  "auth/getUsers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await getUsersRequest();
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
     error: "",
     loading: false,
+    users: [],
   },
   reducers: {
     setUser: (state, action) => {
@@ -98,6 +111,18 @@ const authSlice = createSlice({
       state.error = "";
     },
     [updateUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getUsers.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getUsers.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.users = action.payload;
+      state.error = "";
+    },
+    [getUsers.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

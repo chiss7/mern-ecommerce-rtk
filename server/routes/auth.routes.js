@@ -4,6 +4,7 @@ import { auth, isAdmin } from "../middlewares/auth.js";
 
 const router = Router();
 
+router.get("/", isAdmin, Auth.getUsers);
 router.post("/register", Auth.register);
 router.post("/login", Auth.login);
 router.put("/profile", auth, Auth.updateUser);

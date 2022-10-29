@@ -9,7 +9,7 @@ const ProductController = {
       return res.status(200).json(products);
     } catch (error) {
       console.log(error.message);
-      return res.status(404).json({ message: "Something went wrong" });
+      return res.status(500).json({ message: "Something went wrong" });
     }
   },
   createProduct: async (req, res) => {
@@ -32,7 +32,7 @@ const ProductController = {
       return res.status(201).json(newProduct);
     } catch (error) {
       console.log(error.message);
-      return res.status(404).json({ message: "Something went wrong" });
+      return res.status(500).json({ message: "Something went wrong" });
     }
   },
   getProductBySlug: async (req, res) => {
@@ -43,7 +43,7 @@ const ProductController = {
       return res.json(product)
     } catch (error) {
       console.log(error.message);
-      return res.status(404).json({ message: "Something went wrong" });
+      return res.status(500).json({ message: "Something went wrong" });
     }
   },
   getProductById: async (req, res) => {
@@ -54,7 +54,7 @@ const ProductController = {
       return res.json(product)
     } catch (error) {
       console.log(error.message);
-      return res.status(404).json({ message: "Something went wrong" });
+      return res.status(500).json({ message: "Something went wrong" });
     }
   },
 };

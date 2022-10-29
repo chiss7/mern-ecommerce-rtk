@@ -1,5 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getOrderByIdRequest, getOrdersByUserRequest } from "../api";
+import { getOrderByIdRequest, getOrdersByUserRequest, getOrdersRequest } from "../api";
+
+export const getOrders = createAsyncThunk(
+  "order/getOrders",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await getOrdersRequest();
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const getOrder = createAsyncThunk(
   "order/getOrder",
@@ -32,10 +44,23 @@ const orderSlice = createSlice({
     error: "",
     order: {},
     ordersByUser: [],
+    orders: [],
   },
   reducers: {
   },
   extraReducers: {
+    [getOrders.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getOrders.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.orders = action.payload;
+      state.error = "";
+    },
+    [getOrders.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
     [getOrder.pending]: (state, action) => {
       state.loading = true;
     },
