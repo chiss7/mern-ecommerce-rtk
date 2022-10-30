@@ -852,3 +852,30 @@
   flex: 1;
   font-weight: 700;
 }
+
+/* PRODUCT LIST */
+.image-container img {
+  height: 40px;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.actions button {
+  border: none;
+  outline: none;
+  padding: 3px 5px;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.delete {
+  background-color: rgb(255, 77, 73);
+}
+
+.view {
+  background-color: rgb(114, 225, 40);
+}
