@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const getToursRequest = () => API.get("/product");
+export const getProductsRequest = () => API.get("/product");
 export const createProductRequest = (form) => {
   const product = new FormData();
   for (let key in form) {
@@ -21,6 +21,8 @@ export const createProductRequest = (form) => {
   }
   return API.post("/product", product);
 };
+export const getProductByIdRequest = (id) => API.get(`/product/${id}`);
+export const deleteProductRequest = (id) => API.delete(`/product/${id}`);
 
 export const loginRequest = (user) => API.post("/users/login", user);
 export const registerRequest = (user) => API.post("/users/register", user);

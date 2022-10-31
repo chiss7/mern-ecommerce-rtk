@@ -1,8 +1,26 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetAllProductsQuery } from "../../../redux/features/productApi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  deleteProduct,
+  getProducts,
+} from "../../../redux/features/productSlice";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const ProductList = () => {
-  const { data, isLoading } = useGetAllProductsQuery();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { products: data, loading } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getProducts());
+    // eslint-disable-next-line
+  }, []);
+
+  const handleDelete = (id) => {
+    dispatch(deleteProduct({ id, toast }));
+  };
 
   const rows = data
     ? data.map((item) => {
@@ -49,8 +67,18 @@ const ProductList = () => {
       renderCell: (params) => {
         return (
           <div className="actions">
-            <button className="delete">Delete</button>
-            <button className="view">View</button>
+            <button
+              className="delete"
+              onClick={() => handleDelete(params.row.id)}
+            >
+              {loading ? '...' : 'Delete'}
+            </button>
+            <button
+              className="view"
+              onClick={() => navigate(`/product/${params.row.id}`)}
+            >
+              View
+            </button>
           </div>
         );
       },
@@ -59,7 +87,7 @@ const ProductList = () => {
 
   return (
     <div style={{ height: 400, width: "100%" }}>
-      {isLoading ? (
+      {loading ? (
         "Loading Table..."
       ) : (
         <DataGrid
@@ -68,6 +96,7 @@ const ProductList = () => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          disableSelectionOnClick
         />
       )}
     </div>

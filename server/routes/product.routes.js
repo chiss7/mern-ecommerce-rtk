@@ -8,5 +8,7 @@ router.get("/", ProductController.getProducts);
 router.post("/", isAdmin, ProductController.createProduct);
 router.get("/slug/:slug", ProductController.getProductBySlug);
 router.get("/:id", ProductController.getProductById);
+router.put("/:id", isAdmin, ProductController.updateProduct);
+router.delete("/:id", isAdmin, ProductController.deleteProduct);
 
 export default router;

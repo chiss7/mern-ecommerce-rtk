@@ -28,6 +28,7 @@ import { setUser } from "./redux/features/authSlice";
 import { getTotals } from "./redux/features/cartSlice";
 import PrivateRoute from "./components/PrivateRoute";
 import ProductList from "./pages/admin/list/ProductList";
+import Product from "./components/details/Product";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/product/:id" element={<Product />} />
         <Route
           path="/shipping"
           element={
