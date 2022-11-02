@@ -63,7 +63,7 @@ const ProductList = () => {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 130,
+      width: 180,
       renderCell: (params) => {
         return (
           <div className="actions">
@@ -71,7 +71,12 @@ const ProductList = () => {
               className="delete"
               onClick={() => handleDelete(params.row.id)}
             >
-              {loading ? '...' : 'Delete'}
+              {loading ? "..." : "Delete"}
+            </button>
+            <button
+              onClick={() => navigate(`/admin/products/edit/${params.row.id}`)}
+            >
+              Edit
             </button>
             <button
               className="view"

@@ -18,7 +18,6 @@ export const CreateProduct = () => {
     price: 0,
     countInStock: 0,
     rating: 0,
-    numReviews: 0,
   });
   const [imagePreview, setImagePreview] = useState(null);
   const handleChange = (e) => {
@@ -37,11 +36,10 @@ export const CreateProduct = () => {
     if (
       form.price < 0 ||
       form.countInStock < 0 ||
-      form.rating < 0 ||
-      form.numReviews < 0
+      form.rating < 0
     ) {
       toast.error(
-        "Price, Stock, Rating and NumReviews must be greater than zero"
+        "Price, Stock and Rating must be greater than zero"
       );
     } else if (form.rating > 5) {
       toast.error("Rating must be between 0 and 5");
@@ -137,15 +135,7 @@ export const CreateProduct = () => {
           min={0}
           max={5}
           placeholder="Rating"
-        />
-        <input
-          type="number"
-          name="numReviews"
-          onChange={handleChange}
-          required
-          min={0}
-          placeholder="Number of reviews"
-        />
+        />d
         <button className="primary-button">Submit</button>
       </form>
       <div className="image-preview">

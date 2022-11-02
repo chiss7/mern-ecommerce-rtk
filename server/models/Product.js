@@ -11,7 +11,7 @@ const productSchema = new Schema(
     image: { url: String, public_id: String },
     countInStock: { type: Number, required: true },
     rating: { type: Number, required: true },
-    numReviews: { type: Number, required: true },
+    numReviews: { type: Number, required: true, default: 0 },
   },
   {
     timestamps: true,

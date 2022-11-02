@@ -4,6 +4,7 @@ import {
   deleteProductRequest,
   getProductByIdRequest,
   getProductsRequest,
+  updateProductRequest,
 } from "../api";
 
 export const getProducts = createAsyncThunk(
@@ -50,6 +51,20 @@ export const deleteProduct = createAsyncThunk(
     try {
       const res = await deleteProductRequest(id);
       toast.success("Product deleted successfully");
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  "product/updateProduct",
+  async ({ id, form, toast, navigate }, { rejectWithValue }) => {
+    try {
+      const res = await updateProductRequest(id, form);
+      toast.success("Product updated successfully");
+      navigate("/admin/products");
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -113,6 +128,17 @@ const productSlice = createSlice({
       state.error = "";
     },
     [deleteProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [updateProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [updateProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.error = "";
+    },
+    [updateProduct.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

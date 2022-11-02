@@ -6,8 +6,10 @@ import productRoutes from "./routes/product.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import path from "path";
 import { PAYPAL_API_CLIENT } from "./config.js";
 
+const __dirname = path.resolve();
 const app = express();
 
 // middlewares
@@ -20,6 +22,7 @@ app.use(
     tempFileDir: "./upload",
   })
 );
+app.use(express.static(path.join(__dirname, "/client/build")));
 
 // routes
 app.use("/users", authRoutes);
@@ -32,5 +35,8 @@ app.get("/api/keys/paypal", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Welcome to online shop API");
 });
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/client/build/index.html"))
+);
 
 export default app;

@@ -134,6 +134,14 @@ function App() {
                 </AdminRoute>
               }
             />
+            <Route
+              path="edit/:id"
+              element={
+                <AdminRoute>
+                  <CreateProduct />
+                </AdminRoute>
+              }
+            />
           </Route>
           <Route
             path="orders"
