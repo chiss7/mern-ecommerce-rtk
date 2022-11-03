@@ -22,8 +22,6 @@ app.use(
     tempFileDir: "./upload",
   })
 );
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/client/build")));
 
 // routes
 app.use("/users", authRoutes);
@@ -36,6 +34,8 @@ app.get("/api/keys/paypal", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Welcome to online shop API");
 });
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("*", (req, res) =>
   res.sendFile(path.join(__dirname, "/client/build/index.html"))
 );
