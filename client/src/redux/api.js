@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const devEnv = process.env.NODE_ENV !== "production";
 const API = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: `${
+    devEnv
+      ? "http://localhost:5000"
+      : "https://mern-ecommerce-app-with-paypal.onrender.com/"
+  }`,
 });
 
 API.interceptors.request.use((req) => {
@@ -23,7 +28,8 @@ export const createProductRequest = (form) => {
 };
 export const getProductByIdRequest = (id) => API.get(`/product/${id}`);
 export const deleteProductRequest = (id) => API.delete(`/product/${id}`);
-export const updateProductRequest = (id, form) => API.put(`/product/${id}`, form);
+export const updateProductRequest = (id, form) =>
+  API.put(`/product/${id}`, form);
 
 export const loginRequest = (user) => API.post("/users/login", user);
 export const registerRequest = (user) => API.post("/users/register", user);
