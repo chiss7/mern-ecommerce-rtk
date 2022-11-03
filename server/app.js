@@ -9,12 +9,12 @@ import orderRoutes from "./routes/order.routes.js";
 import path from "path";
 import { PAYPAL_API_CLIENT } from "./config.js";
 
-const __dirname = path.resolve();
 const app = express();
 
 // middlewares
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(
   fileUpload({
@@ -22,6 +22,7 @@ app.use(
     tempFileDir: "./upload",
   })
 );
+const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/client/build")));
 
 // routes
