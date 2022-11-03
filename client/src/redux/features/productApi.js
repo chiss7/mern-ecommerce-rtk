@@ -1,9 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+const devEnv = process.env.NODE_ENV !== "production";
 export const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000",
+    baseUrl: `${
+      devEnv
+        ? "http://localhost:5000"
+        : "https://mern-ecommerce-app-with-paypal.onrender.com/"
+    }`,
   }),
   endpoints: (builder) => ({
     getAllProducts: builder.query({
@@ -30,4 +35,8 @@ export const productApi = createApi({
   }),
 });
 
-export const { useGetAllProductsQuery, useGetOrderByIdQuery, useGetOrdersByUserQuery } = productApi;
+export const {
+  useGetAllProductsQuery,
+  useGetOrderByIdQuery,
+  useGetOrdersByUserQuery,
+} = productApi;
