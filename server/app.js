@@ -31,9 +31,9 @@ app.use("/orders", orderRoutes);
 app.get("/api/keys/paypal", (req, res) => {
   res.send(PAYPAL_API_CLIENT || "sb");
 });
-app.get("/", (req, res) => {
+/* app.get("/", (req, res) => {
   res.send("Welcome to online shop API");
-});
+}); */
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/client/build")));
 app.get("*", (req, res) =>
