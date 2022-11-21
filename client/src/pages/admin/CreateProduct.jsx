@@ -135,7 +135,7 @@ export const CreateProduct = () => {
           min={0}
           max={5}
           placeholder="Rating"
-        />d
+        />
         <button className="primary-button">Submit</button>
       </form>
       <div className="image-preview">

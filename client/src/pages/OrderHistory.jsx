@@ -29,38 +29,56 @@ export const OrderHistory = () => {
   ) : error ? (
     <p>{error}</p>
   ) : (
-    <div className="orderhistory-container">
-      <table>
-        <caption>Order History</caption>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>DATE</th>
-            <th>TOTAL</th>
-            <th>PAID</th>
-            <th>DELIVERED</th>
-            <th>ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders?.map((order) => (
-            <tr key={order._id}>
-              <td data-label='Id'>{order._id}</td>
-              <td data-label='Date'>{order.createdAt.substring(0, 10)}</td>
-              <td data-label='Total'>${order.totalPrice}</td>
-              <td data-label='Paid'>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>
-              <td data-label='Delivered'>
-                {order.isDelivered ? order.deliveredAt.substring(0, 10) : "No"}
-              </td>
-              <td data-label='Actions'>
-                <button onClick={() => navigate(`/order/${order._id}`)}>
-                  Details
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      {orders.length === 0 ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "2rem",
+          }}
+        >
+          <h2 style={{}}>No Orders Yet</h2>
+        </div>
+      ) : (
+        <div className="orderhistory-container">
+          <table>
+            <caption>Order History</caption>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.map((order) => (
+                <tr key={order._id}>
+                  <td data-label="Id">{order._id}</td>
+                  <td data-label="Date">{order.createdAt.substring(0, 10)}</td>
+                  <td data-label="Total">${order.totalPrice}</td>
+                  <td data-label="Paid">
+                    {order.isPaid ? order.paidAt.substring(0, 10) : "No"}
+                  </td>
+                  <td data-label="Delivered">
+                    {order.isDelivered
+                      ? order.deliveredAt.substring(0, 10)
+                      : "No"}
+                  </td>
+                  <td data-label="Actions">
+                    <button onClick={() => navigate(`/order/${order._id}`)}>
+                      Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
   );
 };

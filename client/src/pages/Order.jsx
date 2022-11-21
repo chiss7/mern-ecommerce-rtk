@@ -5,12 +5,23 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { approvePay, payReset } from "../redux/features/paySlice";
-import { getOrder } from "../redux/features/orderSlice";
+//import { getOrder } from "../redux/features/orderSlice";
+import { useGetOrderByIdQuery } from "../redux/features/productApi";
 
 export const Order = () => {
   const dispatch = useDispatch();
   const { id: orderId } = useParams();
-  const { order, loading, error } = useSelector((state) => state.order);
+  //const { order, loading, error } = useSelector((state) => state.order);
+  const {
+    data: order,
+    error,
+    isLoading,
+    refetch,
+    isFetching,
+  } = useGetOrderByIdQuery(orderId, {
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
+  });
   const id = order?._id;
   const totalPrice = order?.totalPrice;
   const { successPay, loadingPay } = useSelector((state) => state.pay);
@@ -49,7 +60,6 @@ export const Order = () => {
     return actions.order.capture().then(async function (details) {
       try {
         dispatch(approvePay({ details, id }));
-        //window.location.reload();
         toast.success("Order is paid");
       } catch (error) {
         toast.error(error);
@@ -66,8 +76,8 @@ export const Order = () => {
 
   useEffect(() => {
     if (!id || successPay || (id && id !== orderId)) {
-      dispatch(getOrder(orderId));
       if (successPay) {
+        refetch();
         dispatch(payReset());
       }
     } else {
@@ -76,7 +86,7 @@ export const Order = () => {
     // eslint-disable-next-line
   }, [id, successPay, dispatch, orderId]);
 
-  return loading ? (
+  return isLoading ? (
     <h1>Loading ...</h1>
   ) : error ? (
     <p>An error occurred {error}</p>
@@ -90,7 +100,8 @@ export const Order = () => {
               <h2>Shipping</h2>
               <strong>Name: </strong> {order?.shippingAddress?.fullName} <br />
               <strong>Address: </strong> {order?.shippingAddress?.country},{" "}
-              {order?.shippingAddress?.city}, {order?.shippingAddress?.postalCode},{" "}
+              {order?.shippingAddress?.city},{" "}
+              {order?.shippingAddress?.postalCode},{" "}
               {order?.shippingAddress?.address} <br />
               {order?.isDelivered ? (
                 <div className="msg msg-success">
@@ -104,7 +115,9 @@ export const Order = () => {
               <h2>Payment</h2>
               <strong>Method: </strong> PayPal
               {order.isPaid ? (
-                <div className="msg msg-success">Paid at {order.paidAt}</div>
+                <div className="msg msg-success">
+                  {isFetching ? "Loading..." : <>Paid at {order.paidAt}</>}
+                </div>
               ) : (
                 <div className="msg msg-danger">Not Paid</div>
               )}

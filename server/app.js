@@ -10,12 +10,26 @@ import path from "path";
 import { PAYPAL_API_CLIENT } from "./config.js";
 
 const app = express();
+const whiteList = [
+  "http://localhost:3000",
+  "https://mern-ecommerce-app-with-paypal.onrender.com/",
+  "https://www.sandbox.paypal.com/",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whiteList.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
 // middlewares
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(
   fileUpload({
     useTempFiles: true,

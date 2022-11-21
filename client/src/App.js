@@ -29,6 +29,8 @@ import { getTotals } from "./redux/features/cartSlice";
 import PrivateRoute from "./components/PrivateRoute";
 import ProductList from "./pages/admin/list/ProductList";
 import Product from "./components/details/Product";
+import OrderList from "./pages/admin/list/OrderList";
+import UserList from "./pages/admin/list/UserList";
 
 function App() {
   const dispatch = useDispatch();
@@ -150,7 +152,16 @@ function App() {
                 <Orders />
               </AdminRoute>
             }
-          />
+          >
+            <Route
+              index
+              element={
+                <AdminRoute>
+                  <OrderList />
+                </AdminRoute>
+              }
+            />
+          </Route>
           <Route
             path="users"
             element={
@@ -158,7 +169,24 @@ function App() {
                 <Users />
               </AdminRoute>
             }
-          />
+          >
+            <Route
+              index
+              element={
+                <AdminRoute>
+                  <UserList />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="new"
+              element={
+                <AdminRoute>
+                  <CreateProduct />
+                </AdminRoute>
+              }
+            />
+          </Route>
         </Route>
         {/* <Route path="/checkout-success" element={<CheckoutSuccess />} /> */}
         <Route path="*" element={<NotFound />} />
