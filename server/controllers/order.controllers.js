@@ -37,6 +37,7 @@ export const placeOrder = {
     try {
       const order = await Order.findById(req.params.id);
       if (!order) return res.status(404).json({ message: "Order not found" });
+      if (order.user.toString() !== req.userId) return res.status(404).json({ message: "This order does not belong to you" });
       res.status(200).json(order);
     } catch (error) {
       console.log(error.message);

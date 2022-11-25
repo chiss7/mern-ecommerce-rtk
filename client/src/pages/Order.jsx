@@ -71,7 +71,7 @@ export const Order = () => {
   };
 
   useEffect(() => {
-    error && toast.error(error);
+    error && toast.error(error.data.message);
   }, [error]);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export const Order = () => {
   return isLoading ? (
     <h1>Loading ...</h1>
   ) : error ? (
-    <p>An error occurred {error}</p>
+    <p>An error occurred: {error.data.message}</p>
   ) : (
     <>
       <div className="container">
