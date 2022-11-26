@@ -18,3 +18,6 @@ export const PAYPAL_API = process.env.PAYPAL_API;
 
 export const HOST = process.env.HOST;
 export const CLIENT_URL = process.env.CLIENT_URL;
+
+export const SGKEY = process.env.SGKEY;
+export const FROM = process.env.FROM;

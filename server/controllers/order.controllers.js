@@ -1,5 +1,7 @@
 import Order from "../models/Order.js";
 import moment from "moment";
+import { FROM } from "../config.js";
+import { payOrderEmailTemplate, sendMail } from "../utils.js";
 
 export const placeOrder = {
   getOrders: async (req, res) => {
@@ -9,7 +11,8 @@ export const placeOrder = {
         ? await Order.find().sort({ _id: -1 }).limit(4)
         : await Order.find().sort({ _id: -1 });
       //console.log(orders);
-      if (!orders) return res.status(404).json({ message: "There is no order yet" });
+      if (!orders)
+        return res.status(404).json({ message: "There is no order yet" });
       res.status(200).json(orders);
     } catch (error) {
       console.log(error.message);
@@ -37,7 +40,10 @@ export const placeOrder = {
     try {
       const order = await Order.findById(req.params.id);
       if (!order) return res.status(404).json({ message: "Order not found" });
-      if (order.user.toString() !== req.userId) return res.status(404).json({ message: "This order does not belong to you" });
+      if (order.user.toString() !== req.userId)
+        return res
+          .status(404)
+          .json({ message: "This order does not belong to you" });
       res.status(200).json(order);
     } catch (error) {
       console.log(error.message);
@@ -68,9 +74,18 @@ export const placeOrder = {
           },
         },
         { new: true }
-      );
+      ).populate("user");
       if (!updatedOrder)
         return res.status(404).json({ message: "Order not found" });
+
+      const msg = {
+        to: updatedOrder.user.email, // Change to your recipient
+        from: FROM, // Change to your verified sender
+        subject: "Thanks for your order",
+        html: payOrderEmailTemplate(updatedOrder),
+      };
+      sendMail(msg);
+
       return res.json({ message: "Order Paid", order: updatedOrder });
     } catch (error) {
       console.log(error.message);
