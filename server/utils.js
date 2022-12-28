@@ -1,5 +1,16 @@
 import sgMail from "@sendgrid/mail";
-import { SGKEY } from "./config.js";
+import { SGKEY, SECRET } from "./config.js";
+import jwt from "jsonwebtoken";
+
+export const getTokenData = (token) => {
+  try {
+    let decodedData = null;
+    decodedData = jwt.verify(token, SECRET);
+    return decodedData;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export const sendMail = (msg) => {
   sgMail.setApiKey(SGKEY);
@@ -67,3 +78,14 @@ export const payOrderEmailTemplate = (order) => {
   </p>
   `;
 };
+
+export const verifyAccountTemplate = (name, token) => {
+  return `
+    <div>
+      <h1>Thanks for prefer us</h1>
+      <h2>Hi ${name},</h2>
+      <p>To confirm your account, enter the following link</p>
+      <a href='http://localhost:5000/users/confirm/${token}'>Confirm Account</a>
+    </div>
+  `;
+}

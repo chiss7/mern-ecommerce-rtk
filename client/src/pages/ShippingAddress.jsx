@@ -33,10 +33,10 @@ export const ShippingAddress = () => {
   };
 
   return (
-    <>
+    <div className="bg-sky-100 h-[93.8vh] text-gray-700 flex flex-col justify-start items-center">
       <CheckoutSteps step1 step2 />
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h2>Shipping Address</h2>
+      <form className="bg-white w-4/5 lg:w-1/2 min-h-[10rem] shadow-lg rounded-md overflow-hidden p-5 flex flex-col gap-5 items-center" onSubmit={handleSubmit}>
+        <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center">Shipping Address</h2>
         <input
           type="text"
           name="fullName"
@@ -44,6 +44,7 @@ export const ShippingAddress = () => {
           required
           value={formValue.fullName}
           onChange={handleChange}
+          className="input"
         />
         <input
           type="text"
@@ -52,6 +53,7 @@ export const ShippingAddress = () => {
           required
           value={formValue.country}
           onChange={handleChange}
+          className="input"
         />
         <input
           type="text"
@@ -60,6 +62,7 @@ export const ShippingAddress = () => {
           required
           value={formValue.city}
           onChange={handleChange}
+          className="input"
         />
         <input
           type="text"
@@ -68,6 +71,7 @@ export const ShippingAddress = () => {
           required
           value={formValue.postalCode}
           onChange={handleChange}
+          className="input"
         />
         <input
           type="text"
@@ -76,9 +80,10 @@ export const ShippingAddress = () => {
           required
           value={formValue.address}
           onChange={handleChange}
+          className="input"
         />
-        <button>Continue</button>
+        <button className="button-primary w-full">Continue</button>
       </form>
-    </>
+    </div>
   );
 };

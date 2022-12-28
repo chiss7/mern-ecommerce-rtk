@@ -12,6 +12,8 @@ const userSchema = new Schema(
     },
     password: { type: String, required: true, minlength: 3, maxlength: 1024 },
     isAdmin: { type: Boolean, default: false, required: true },
+    code: { type: String, required: true },
+    verified: { type: Boolean, default: false, required: true }
   },
   {
     timestamps: true,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { updateUser } from "../redux/features/authSlice";
 
 export const Profile = () => {
@@ -38,37 +39,52 @@ export const Profile = () => {
   };
 
   return (
-    <form className="register-form" onSubmit={handleSubmit}>
-      <h2>Profile</h2>
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        onChange={handleChange}
-        value={form.name}
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        onChange={handleChange}
-        value={form.email}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={handleChange}
-        value={form.password}
-      />
-      <input
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        onChange={handleChange}
-        value={form.confirmPassword}
-      />
-      {loading ? <button disabled>Submitting</button> : <button>Update</button>}
-    </form>
+    <div className="bg-sky-100 h-[93.8vh] text-gray-700 flex justify-center items-center">
+      <form className="bg-white w-4/5 lg:w-1/2 min-h-[10rem] shadow-lg rounded-md overflow-hidden p-5 flex flex-col gap-5 items-center" onSubmit={handleSubmit}>
+        <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center">Profile</h2>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          onChange={handleChange}
+          value={form.name}
+          className="input"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          value={form.email}
+          className="input"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          value={form.password}
+          className="input"
+        />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          onChange={handleChange}
+          value={form.confirmPassword}
+          className="input"
+        />
+        {loading ? (
+          <button
+            className="button-primary w-full flex justify-center items-center"
+            disabled
+          >
+            <LoadingSpinner /> Updating...
+          </button>
+        ) : (
+          <button className="button-primary w-full">Update</button>
+        )}
+      </form>
+    </div>
   );
 };

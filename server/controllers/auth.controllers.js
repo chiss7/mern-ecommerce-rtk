@@ -1,11 +1,13 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { SECRET } from "../config.js";
+import { FROM, SECRET } from "../config.js";
 import moment from "moment";
+import { v4 as uuidv4 } from "uuid";
+import { sendMail, verifyAccountTemplate } from "../utils.js";
 
-const signToken = (_id, isAdmin) =>
-  jwt.sign({ _id, isAdmin }, SECRET, { expiresIn: "5h" });
+const signToken = (_id, isAdmin, code) =>
+  jwt.sign({ _id, isAdmin, code }, SECRET, { expiresIn: "5h" });
 
 export const Auth = {
   login: async (req, res) => {
@@ -16,7 +18,7 @@ export const Auth = {
         return res.status(404).json({ message: "User doesn't exists" });
       const isMatch = await bcrypt.compare(password, oldUser.password);
       if (isMatch) {
-        const signed = signToken(oldUser._id, oldUser.isAdmin);
+        const signed = signToken(oldUser._id, oldUser.isAdmin, oldUser.code);
         return res.status(200).json({ result: oldUser, signed });
       } else {
         return res.status(400).json({ message: "Invalid password" });
@@ -34,13 +36,25 @@ export const Auth = {
         return res.status(400).json({ message: "User already exists" });
       const salt = await bcrypt.genSalt();
       const hashed = await bcrypt.hash(password, salt);
+      const code = uuidv4();
       const user = await User.create({
         name: `${firstName} ${lastName}`,
         email,
         password: hashed,
         isAdmin,
+        code,
       });
-      const signed = signToken(user._id, user.isAdmin);
+      const signed = signToken(user._id, user.isAdmin, user.code);
+
+      // send email
+      const msg = {
+        to: user.email,
+        from: FROM,
+        subject: "Please verify your account",
+        html: verifyAccountTemplate(user.name, user.code),
+      };
+      sendMail(msg);
+
       return res.status(201).json({ result: user, signed });
     } catch (error) {
       console.log(error.message);
@@ -59,7 +73,7 @@ export const Auth = {
           user.password = hashed;
         }
         const updatedUser = await user.save();
-        const signed = signToken(updatedUser._id, updatedUser.isAdmin);
+        const signed = signToken(updatedUser._id, updatedUser.isAdmin, updatedUser.code);
         return res.json({ result: updatedUser, signed });
       }
       return res.status(404).json({ message: "User not found" });
@@ -98,12 +112,13 @@ export const Auth = {
   },
   getUsers: async (req, res) => {
     try {
-      const users = await User.find()
-      if (!users) return res.status(404).json({ message: "There is no user yet" });
+      const users = await User.find();
+      if (!users)
+        return res.status(404).json({ message: "There is no user yet" });
       res.status(200).json(users);
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ message: "Something went wrong" });
     }
-  }
+  },
 };

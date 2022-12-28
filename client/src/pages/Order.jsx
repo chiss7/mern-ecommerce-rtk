@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { approvePay, payReset } from "../redux/features/paySlice";
 //import { getOrder } from "../redux/features/orderSlice";
 import { useGetOrderByIdQuery } from "../redux/features/productApi";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export const Order = () => {
   const dispatch = useDispatch();
@@ -87,85 +88,115 @@ export const Order = () => {
   }, [id, successPay, dispatch, orderId]);
 
   return isLoading ? (
-    <h1>Loading ...</h1>
+    <div className="h-[93.8vh] bg-sky-100 text-gray-700 flex items-center justify-center py-5">
+      <LoadingSpinner msg="Loading..." />
+    </div>
   ) : error ? (
-    <p>An error occurred: {error.data.message}</p>
+    <div className="h-[93.8vh] bg-sky-100 flex justify-center py-5 text-red-500">
+      <p>An error occurred {error.data.message}</p>
+    </div>
   ) : (
-    <>
-      <div className="container">
-        <h1>Order #{order._id}</h1>
-        <div className="info-container">
-          <div className="elements-info">
-            <div className="shipping-container box">
-              <h2>Shipping</h2>
+    <div className="bg-sky-100 min-h-[93.8vh] text-gray-700 flex flex-col items-center justify-start">
+      <div className="w-4/5 pb-7">
+        <h1 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center my-3">
+          Order #{order._id}
+        </h1>
+        <div className="flex flex-col gap-3 md:flex-row">
+          <div className="flex flex-col gap-3 md:w-1/2 lg:w-2/3">
+            <div className="bg-white w-full min-h-[10rem] md:min-h-[9rem] shadow-lg rounded-md overflow-hidden p-5">
+              <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+                Shipping
+              </h2>
               <strong>Name: </strong> {order?.shippingAddress?.fullName} <br />
               <strong>Address: </strong> {order?.shippingAddress?.country},{" "}
               {order?.shippingAddress?.city},{" "}
               {order?.shippingAddress?.postalCode},{" "}
               {order?.shippingAddress?.address} <br />
               {order?.isDelivered ? (
-                <div className="msg msg-success">
-                  Delivered at {order.deliveredAt}
+                <div className="text-center mt-2 bg-green-500 text-gray-100 rounded-md py-2">
+                  {isFetching ? 'Loading...' : <>Delivered at {order.deliveredAt}</>}
                 </div>
               ) : (
-                <div className="msg msg-danger">Not Delivered</div>
+                <div className="text-center mt-2 bg-red-400 text-gray-100 rounded-md py-2">Not Delivered</div>
               )}
             </div>
-            <div className="payment-container box">
-              <h2>Payment</h2>
+            <div className="bg-white w-full min-h-[5rem] shadow-lg rounded-md overflow-hidden p-5">
+              <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+                Payment
+              </h2>
               <strong>Method: </strong> PayPal
               {order.isPaid ? (
-                <div className="msg msg-success">
+                <div className="text-center mt-2 bg-green-500 text-gray-100 rounded-md py-2">
                   {isFetching ? "Loading..." : <>Paid at {order.paidAt}</>}
                 </div>
               ) : (
-                <div className="msg msg-danger">Not Paid</div>
+                <div className="text-center mt-2 bg-red-400 text-gray-100 rounded-md py-2">Not Paid</div>
               )}
             </div>
-            <div className="products-container box">
-              <h2>Products</h2>
+            <div className="bg-white w-full min-h-[10rem] shadow-lg rounded-md overflow-hidden p-5">
+              <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+                Products
+              </h2>
               {order?.orderItems?.map((product) => (
-                <div className="product-card" key={product._id}>
-                  <div className="cart-product">
-                    <img src={product.image.url} alt={product.name} />
-                    <div>
-                      <h3>{product.name}</h3>
-                      <p>{product.description}</p>
+                <div
+                  className="flex flex-col border border-gray-300 rounded-md mb-2 lg:flex-row"
+                  key={product._id}
+                >
+                  <div className="lg:flex lg:w-1/2">
+                    <img
+                      className="w-full h-full lg:w-1/2 xl:w-1/3 lg:rounded-l-md lg:rounded-tr-none object-cover rounded-t-md"
+                      src={product.image.url}
+                      alt={product.name}
+                    />
+                    <div className="lg:justify-center lg:flex lg:flex-col">
+                      <h3 className="px-3 pt-1 font-semibold">
+                        {product.name}
+                      </h3>
                     </div>
                   </div>
-                  <div className="product-quantity">
-                    <h4>{product.cartQuantity}</h4>
-                  </div>
-                  <div className="product-price">
-                    <h4>${product.price}</h4>
+                  <div className="flex justify-between px-3 pb-1 lg:w-1/2 lg:justify-around lg:items-center">
+                    <div>
+                      <h4>Quantity: {product.cartQuantity}</h4>
+                    </div>
+                    <div className="font-semibold">
+                      <h4>${product.price}</h4>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="order-container box">
-            <h2>Order Summary</h2>
-            <div className="order-container_items">
-              <div className="order-items">
+          <div
+            className={`bg-white w-full min-h-[10rem] md:w-1/2 lg:w-1/3 shadow-lg rounded-md overflow-hidden p-5 ${
+              order.isPaid ? "h-[21vh]" : ""
+            }`}
+          >
+            <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+              Order Summary
+            </h2>
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between">
                 <h4>Products</h4>
-                <p>${order.itemsPrice}</p>
+                <p className="font-semibold">${order.itemsPrice}</p>
               </div>
-              <div className="order-items">
+              <div className="flex justify-between">
                 <h4>Shipping</h4>
-                <p>${order.shippingPrice}</p>
+                <p className="font-semibold">${order.shippingPrice}</p>
               </div>
-              <div className="order-items">
+              <div className="flex justify-between">
                 <h4>Tax</h4>
-                <p>${order.taxPrice}</p>
+                <p className="font-semibold">${order.taxPrice}</p>
               </div>
-              <div className="order-items">
+              <div className="flex justify-between">
                 <h4>Order Total</h4>
-                <p>${order.totalPrice}</p>
+                <p className="font-semibold">${order.totalPrice}</p>
               </div>
               {!order.isPaid && (
                 <>
                   {isPending ? (
-                    <p>Loading...</p>
+                    <div className="flex items-center justify-center py-5">
+                      <LoadingSpinner msg="Loading..." />
+                    </div>
                   ) : (
                     <div className="paypal-button">
                       <PayPalButtons
@@ -175,13 +206,17 @@ export const Order = () => {
                       ></PayPalButtons>
                     </div>
                   )}
-                  {loadingPay && <p>Loading...</p>}
+                  {loadingPay && (
+                    <div className="flex items-center justify-center py-5">
+                      <LoadingSpinner msg="Loading..." />
+                    </div>
+                  )}
                 </>
               )}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

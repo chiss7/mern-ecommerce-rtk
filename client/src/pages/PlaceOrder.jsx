@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CheckoutSteps from "../components/CheckoutSteps";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { saveOrderSummary } from "../redux/features/cartSlice";
 import { createOrder } from "../redux/features/cartSlice";
 
@@ -67,73 +68,112 @@ export const PlaceOrder = () => {
   };
 
   return (
-    <>
+    <div className="bg-sky-100 min-h-[93.8vh] text-gray-700 flex flex-col items-center justify-start">
       <CheckoutSteps step1 step2 step3 />
-      <div className="container">
-        <h1>Preview Order</h1>
-        <div className="info-container">
-          <div className="elements-info">
-            <div className="shipping-container box">
-              <h2>Shipping</h2>
+      <div className="w-4/5 pb-7">
+        <h1 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center mb-2">
+          Order Preview
+        </h1>
+        <div className="flex flex-col gap-3 md:flex-row">
+          <div className="flex flex-col gap-3 md:w-1/2 lg:w-2/3">
+            <div className="bg-white w-full min-h-[10rem] md:min-h-[9rem] shadow-lg rounded-md overflow-hidden p-5">
+              <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+                Shipping
+              </h2>
               <strong>Name: </strong> {shippingAddress.fullName} <br />
               <strong>Address: </strong> {shippingAddress.country},{" "}
               {shippingAddress.city}, {shippingAddress.postalCode},{" "}
               {shippingAddress.address} <br />
-              <Link to="/shipping">Edit</Link>
+              <Link to="/shipping" className="text-sky-400">
+                Edit
+              </Link>
             </div>
-            <div className="payment-container box">
-              <h2>Payment</h2>
+            <div className="bg-white w-full min-h-[5rem] shadow-lg rounded-md overflow-hidden p-5">
+              <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+                Payment
+              </h2>
               <strong>Method: </strong> PayPal
             </div>
-            <div className="products-container box">
-              <h2>Products</h2>
+            <div className="bg-white w-full min-h-[10rem] shadow-lg rounded-md overflow-hidden p-5">
+              <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+                Products
+              </h2>
               {cartItems.map((product) => (
-                <div className="product-card" key={product._id}>
-                  <div className="cart-product">
-                    <img src={product.image.url} alt={product.name} />
-                    <div>
-                      <h3>{product.name}</h3>
-                      <p>{product.description}</p>
+                <div
+                  className="flex flex-col border border-gray-300 rounded-md mb-2 lg:flex-row"
+                  key={product._id}
+                >
+                  <div className="lg:flex lg:w-1/2">
+                    <img
+                      className="w-full h-full lg:w-1/2 xl:w-1/3 lg:rounded-l-md lg:rounded-tr-none object-cover rounded-t-md"
+                      src={product.image.url}
+                      alt={product.name}
+                    />
+                    <div className="lg:justify-center lg:flex lg:flex-col">
+                      <h3 className="px-3 pt-1 font-semibold">
+                        {product.name}
+                      </h3>
+                      <div className="px-3 text-gray-500">
+                        {product.description}
+                      </div>
                     </div>
                   </div>
-                  <div className="product-quantity">
-                    <h4>{product.cartQuantity}</h4>
-                  </div>
-                  <div className="product-price">
-                    <h4>${product.price}</h4>
+                  <div className="flex justify-between px-3 pb-1 lg:w-1/2 lg:justify-around lg:items-center">
+                    <div>
+                      <h4>Quantity: {product.cartQuantity}</h4>
+                    </div>
+                    <div className="font-semibold">
+                      <h4>${product.price}</h4>
+                    </div>
                   </div>
                 </div>
               ))}
-              <Link to="/cart">Edit</Link>
+              <Link to="/cart" className="text-sky-400">
+                Edit
+              </Link>
             </div>
           </div>
-          <div className="order-container box">
-            <h2>Order Summary</h2>
-            <div className="order-container_items">
-              <div className="order-items">
+          <div className="bg-white w-full min-h-[10rem] md:h-[16rem] md:w-1/2 lg:w-1/3 shadow-lg rounded-md overflow-hidden p-5">
+            <h2 className="font-semibold text-xl overflow-ellipsis overflow-hidden whitespace-nowrap mb-2">
+              Order Summary
+            </h2>
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between">
                 <h4>Products</h4>
-                <p>${itemsPrice}</p>
+                <p className="font-semibold">${itemsPrice}</p>
               </div>
-              <div className="order-items">
+              <div className="flex justify-between">
                 <h4>Shipping</h4>
-                <p>${shippingPrice}</p>
+                <p className="font-semibold">${shippingPrice}</p>
               </div>
-              <div className="order-items">
+              <div className="flex justify-between">
                 <h4>Tax</h4>
-                <p>${taxPrice}</p>
+                <p className="font-semibold">${taxPrice}</p>
               </div>
-              <div className="order-items">
+              <div className="flex justify-between">
                 <h4>Order Total</h4>
-                <p>${totalPrice}</p>
+                <p className="font-semibold">${totalPrice}</p>
               </div>
-              <div className="order-items">
-                <button onClick={placeOrderHandler}>Place Order</button>
-              </div>
-              {loading && <p>Loading...</p>}
+
+              {loading ? (
+                <button
+                  className="button-primary w-full flex justify-center items-center"
+                  disabled
+                >
+                  <LoadingSpinner /> Loading...
+                </button>
+              ) : (
+                <button
+                  className="button-primary w-full"
+                  onClick={placeOrderHandler}
+                >
+                  Place Order
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

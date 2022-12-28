@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../redux/features/authSlice";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export const Login = () => {
-  // redirect to shipping page 
+  // redirect to shipping page
   const location = useLocation();
   const redirectInUrl = new URLSearchParams(location.search).get("redirect");
   const redirect = redirectInUrl ? redirectInUrl : "/";
@@ -34,15 +35,21 @@ export const Login = () => {
   };
 
   return (
-    <>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+    <div className="bg-sky-100 h-[93.8vh] text-gray-700 flex justify-center items-center">
+      <form
+        className="bg-white w-4/5 lg:w-1/2 min-h-[10rem] shadow-lg rounded-md overflow-hidden p-5 flex flex-col gap-5 items-center"
+        onSubmit={handleSubmit}
+      >
+        <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center">
+          Login
+        </h2>
         <input
           type="text"
           name="email"
           placeholder="Email"
           required
           onChange={handleChange}
+          className="input"
         />
         <input
           type="password"
@@ -50,10 +57,25 @@ export const Login = () => {
           placeholder="Password"
           required
           onChange={handleChange}
+          className="input"
         />
-        {loading ? <button disabled>Submitting</button> : <button>Login</button>}
-        <p>New Customer? <Link to={`/register?redirect=${redirect}`}>Register</Link></p>
+        {loading ? (
+          <button
+            className="button-primary w-full flex justify-center items-center"
+            disabled
+          >
+            <LoadingSpinner /> Submitting...
+          </button>
+        ) : (
+          <button className="button-primary w-full">Login</button>
+        )}
+        <p>
+          New Customer?{" "}
+          <Link className="text-sky-400" to={`/register?redirect=${redirect}`}>
+            Register
+          </Link>
+        </p>
       </form>
-    </>
+    </div>
   );
 };

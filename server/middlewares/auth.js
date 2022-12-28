@@ -1,5 +1,4 @@
-import jwt from "jsonwebtoken";
-import { SECRET } from "../config.js";
+import { getTokenData } from "../utils.js";
 
 export const auth = async (req, res, next) => {
   try {
@@ -8,8 +7,7 @@ export const auth = async (req, res, next) => {
       return res
         .status(401)
         .json({ message: "Access denied. Not authenticated" });
-    let decodedData;
-    decodedData = jwt.verify(token, SECRET);
+    const decodedData = getTokenData(token);
     req.userId = decodedData?._id;
     req.user = decodedData;
     next();

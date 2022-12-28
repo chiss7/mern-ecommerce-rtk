@@ -78,9 +78,10 @@ export const placeOrder = {
       if (!updatedOrder)
         return res.status(404).json({ message: "Order not found" });
 
+      // send email
       const msg = {
-        to: updatedOrder.user.email, // Change to your recipient
-        from: FROM, // Change to your verified sender
+        to: updatedOrder.user.email,
+        from: FROM,
         subject: "Thanks for your order",
         html: payOrderEmailTemplate(updatedOrder),
       };
