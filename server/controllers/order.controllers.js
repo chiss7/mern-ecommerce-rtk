@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import Product from "../models/Product.js";
 import moment from "moment";
 import { FROM } from "../config.js";
 import { payOrderEmailTemplate, sendMail } from "../utils.js";
@@ -77,6 +78,13 @@ export const placeOrder = {
       ).populate("user");
       if (!updatedOrder)
         return res.status(404).json({ message: "Order not found" });
+
+      updatedOrder.orderItems.map((item) =>
+        Product.findById(item._id.toString()).then((prod) => {
+          prod.countInStock = prod.countInStock - item.cartQuantity;
+          prod.save();
+        })
+      );
 
       // send email
       const msg = {

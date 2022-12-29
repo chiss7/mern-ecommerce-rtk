@@ -66,10 +66,15 @@ export const Home = () => {
                   {/* product button */}
                   <div className="mt-2">
                     <button
-                      className="button-primary w-full"
+                      className={`button-primary w-full ${
+                        product.countInStock === 0 ? "cursor-not-allowed" : ""
+                      }`}
                       onClick={() => handleAddToCart(product)}
+                      disabled={product.countInStock === 0}
                     >
-                      Add To Cart
+                      {product.countInStock > 0
+                        ? "Add To Cart"
+                        : "Out of Stock"}
                     </button>
                   </div>
                 </div>

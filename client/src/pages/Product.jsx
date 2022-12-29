@@ -45,7 +45,13 @@ export const Product = () => {
                 <h3 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap">
                   {product.name}
                 </h3>
-                <p className="bg-green-300 px-2 py-1">
+                <p
+                  className={`${
+                    product.countInStock > 0
+                      ? "bg-green-300 px-2 py-1"
+                      : "bg-red-300 px-2 py-1"
+                  }`}
+                >
                   {product.countInStock > 0 ? "in stock" : "out of stock"}
                 </p>
               </div>
@@ -102,10 +108,13 @@ export const Product = () => {
               {/* product buttons */}
               <div className="my-2">
                 <button
-                  className="button-primary w-full"
+                  className={`button-primary w-full ${
+                    product.countInStock === 0 ? "cursor-not-allowed" : ""
+                  }`}
                   onClick={() => handleAddToCart(product)}
+                  disabled={product.countInStock === 0}
                 >
-                  Add To Cart
+                  {product.countInStock > 0 ? "Add To Cart" : "Out of Stock"}
                 </button>
               </div>
             </div>
