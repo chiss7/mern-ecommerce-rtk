@@ -1,7 +1,7 @@
 import { useGetAllProductsQuery } from "../redux/features/productApi";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/features/cartSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 export const Home = () => {
@@ -15,7 +15,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="bg-sky-100 md:h-[93.8vh] text-gray-700">
+    <div className="bg-sky-100 md:min-h-[93.8vh] text-gray-700">
       <h2 className="text-3xl text-center pt-5 font-extrabold">New Arrivals</h2>
       {isLoading ? (
         <div className="h-[88vh] flex items-center justify-center py-5">
@@ -35,19 +35,23 @@ export const Home = () => {
                 key={product._id}
               >
                 {/* product img */}
-                <img
-                  className="w-full h-full object-cover"
-                  src={product.image.url}
-                  alt={product.name}
-                />
+                <Link to={`/${product.slug}`}>
+                  <img
+                    className="w-full h-full object-cover hover:shadow-lg transition"
+                    src={product.image.url}
+                    alt={product.name}
+                  />
+                </Link>
 
                 {/* product body */}
                 <div className="p-5 flex flex-col gap-2">
                   <div className="flex justify-between items-center">
                     {/* product title */}
-                    <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap">
-                      {product.name}
-                    </h2>
+                    <Link to={`/${product.slug}`}>
+                      <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap">
+                        {product.name}
+                      </h2>
+                    </Link>
                     {/* product price */}
                     <span className="text-xl font-bold">${product.price}</span>
                   </div>
@@ -60,7 +64,7 @@ export const Home = () => {
                   </div>
 
                   {/* product button */}
-                  <div className="mt-2 flex justify-center">
+                  <div className="mt-2">
                     <button
                       className="button-primary w-full"
                       onClick={() => handleAddToCart(product)}

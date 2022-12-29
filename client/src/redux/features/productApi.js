@@ -32,6 +32,11 @@ export const productApi = createApi({
         },
       }),
     }),
+    getProductBySlug: builder.query({
+      query: (slug) => ({
+        url: `/product/${slug}`,
+      }),
+    }),
   }),
 });
 
@@ -39,4 +44,5 @@ export const {
   useGetAllProductsQuery,
   useGetOrderByIdQuery,
   useGetOrdersByUserQuery,
+  useGetProductBySlugQuery,
 } = productApi;

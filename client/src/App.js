@@ -15,6 +15,7 @@ import {
   OrderHistory,
   Orders,
   PlaceOrder,
+  Product,
   Products,
   Profile,
   Register,
@@ -28,7 +29,6 @@ import { setUser } from "./redux/features/authSlice";
 import { getTotals } from "./redux/features/cartSlice";
 import PrivateRoute from "./components/PrivateRoute";
 import ProductList from "./pages/admin/list/ProductList";
-import Product from "./components/details/Product";
 import OrderList from "./pages/admin/list/OrderList";
 import UserList from "./pages/admin/list/UserList";
 
@@ -55,7 +55,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/product/:id" element={<Product />} />
+        <Route path="/:slug" element={<Product />} />
         <Route
           path="/shipping"
           element={

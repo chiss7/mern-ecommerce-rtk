@@ -9,6 +9,7 @@ export { PlaceOrder } from "./PlaceOrder";
 export { Order } from "./Order";
 export { OrderHistory } from "./OrderHistory";
 export { Profile } from "./Profile";
+export { Product } from "./Product";
 export { Dashboard } from "./admin/Dashboard";
 export { Products } from "./admin/Products";
 export { Orders } from "./admin/Orders";
