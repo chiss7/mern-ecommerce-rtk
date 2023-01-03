@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/features/cartSlice";
 import { Link, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Rating from "../components/Rating";
 
 export const Home = () => {
   const { data, error, isLoading } = useGetAllProductsQuery();
@@ -15,19 +16,19 @@ export const Home = () => {
   };
 
   return (
-    <div className="bg-sky-100 md:min-h-[93.8vh] text-gray-700">
+    <>
       <h2 className="text-3xl text-center pt-5 font-extrabold">New Arrivals</h2>
       {isLoading ? (
-        <div className="h-[88vh] flex items-center justify-center py-5">
+        <div className="flex items-center justify-center py-5">
           <LoadingSpinner msg="Loading..." />
         </div>
       ) : error ? (
-        <div className="h-[88vh] flex justify-center py-5 text-red-500">
+        <div className="flex justify-center py-5 text-red-500">
           <p>An error occurred {error.data.message}</p>
         </div>
       ) : (
         <>
-          <div className="md:h-[80vh] flex items-center justify-center gap-8 flex-col md:flex-row md:flex-wrap sm:py-3">
+          <div className="flex items-center justify-center gap-8 flex-col md:flex-row md:flex-wrap sm:py-3">
             {data?.map((product) => (
               /* product card */
               <div
@@ -60,7 +61,7 @@ export const Home = () => {
                   <span>{product.description}</span>
                   <div className="flex justify-between">
                     <span>Category: {product.category}</span>
-                    <span>{product.rating} stars</span>
+                    <Rating rating={product.rating} />
                   </div>
 
                   {/* product button */}
@@ -83,6 +84,6 @@ export const Home = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };

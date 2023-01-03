@@ -24,21 +24,21 @@ export const OrderHistory = () => {
   }, []);
 
   return loading ? (
-    <div className="h-[93.8vh] bg-sky-100 text-gray-700 flex items-center justify-center py-5">
+    <div className="h-[calc(100vh-59px)] flex items-center justify-center py-5">
       <LoadingSpinner msg="Loading..." />
     </div>
   ) : error ? (
-    <div className="h-[93.8vh] bg-sky-100 flex justify-center py-5 text-red-500">
+    <div className="h-[calc(100vh-59px)] flex justify-center py-5 text-red-500">
       <p>An error occurred {error}</p>
     </div>
   ) : (
     <>
       {orders.length === 0 ? (
-        <div className="h-[93.8vh] bg-sky-100 text-gray-700 flex items-start justify-center py-5">
+        <div className="h-[calc(100vh-59px)] flex items-start justify-center py-5">
           <h2 className="font-semibold text-2xl my-3">No Orders Yet</h2>
         </div>
       ) : (
-        <div className="h-[93.8vh] bg-sky-100 text-gray-700 flex items-start justify-center py-5">
+        <div className="min-h-[calc(100vh-59px)] flex items-start justify-center py-5">
           <table className="table">
             <caption className="font-bold text-2xl uppercase">
               Order History

@@ -68,7 +68,7 @@ export const PlaceOrder = () => {
   };
 
   return (
-    <div className="bg-sky-100 min-h-[93.8vh] text-gray-700 flex flex-col items-center justify-start">
+    <div className="min-h-[calc(100vh-59px)] flex flex-col items-center justify-start">
       <CheckoutSteps step1 step2 step3 />
       <div className="w-4/5 pb-7">
         <h1 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center mb-2">

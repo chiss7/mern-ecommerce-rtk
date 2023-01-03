@@ -3,6 +3,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { addToCart } from "../redux/features/cartSlice";
 import { useGetProductBySlugQuery } from "../redux/features/productApi";
 import { useDispatch } from "react-redux";
+import Rating from "../components/Rating";
 
 export const Product = () => {
   const params = useParams();
@@ -20,14 +21,14 @@ export const Product = () => {
   };
 
   return (
-    <div className="bg-sky-100 min-h-[93.8vh] text-gray-700">
+    <>
       <div className="flex flex-col items-center">
         {isLoading ? (
-          <div className="h-[88vh] flex items-center justify-center py-5">
+          <div className="flex items-center justify-center py-5">
             <LoadingSpinner msg="Loading..." />
           </div>
         ) : error ? (
-          <div className="h-[88vh] flex justify-center py-5 text-red-500">
+          <div className="flex justify-center py-5 text-red-500">
             <p>An error occurred {error.data.message}</p>
           </div>
         ) : (
@@ -69,9 +70,10 @@ export const Product = () => {
                 <div className="text-3xl font-bold my-3">
                   ${product.price?.toLocaleString()}
                 </div>
-                <p>
-                  <span>{product.rating} stars</span>
-                </p>
+                <div className="flex gap-3">
+                  <p className="text-gray-400">( {product.rating} stars )</p>
+                  <Rating rating={product.rating} />
+                </div>
               </div>
 
               <div className="flex items-center gap-3">
@@ -82,7 +84,7 @@ export const Product = () => {
                   height="44"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
-                  stroke="#000000"
+                  stroke="#374151"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -136,6 +138,6 @@ export const Product = () => {
           /* to do -> feedback, rating */
         )}
       </div>
-    </div>
+    </>
   );
 };

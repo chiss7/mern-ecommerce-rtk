@@ -88,15 +88,15 @@ export const Order = () => {
   }, [id, successPay, dispatch, orderId]);
 
   return isLoading ? (
-    <div className="h-[93.8vh] bg-sky-100 text-gray-700 flex items-center justify-center py-5">
+    <div className="h-[calc(100vh-59px)] flex items-center justify-center py-5">
       <LoadingSpinner msg="Loading..." />
     </div>
   ) : error ? (
-    <div className="h-[93.8vh] bg-sky-100 flex justify-center py-5 text-red-500">
+    <div className="h-[calc(100vh-59px)] flex justify-center py-5 text-red-500">
       <p>An error occurred {error.data.message}</p>
     </div>
   ) : (
-    <div className="bg-sky-100 min-h-[93.8vh] text-gray-700 flex flex-col items-center justify-start">
+    <div className="min-h-[calc(100vh-59px)] flex flex-col items-center justify-start">
       <div className="w-4/5 pb-7">
         <h1 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center my-3">
           Order #{order._id}

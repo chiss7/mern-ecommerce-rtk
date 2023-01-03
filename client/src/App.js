@@ -48,149 +48,150 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/:slug" element={<Product />} />
-        <Route
-          path="/shipping"
-          element={
-            <PrivateRoute>
-              <ShippingAddress />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/place-order"
-          element={
-            <PrivateRoute>
-              <PlaceOrder />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/order/:id"
-          element={
-            <PrivateRoute>
-              <Order />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/order-history"
-          element={
-            <PrivateRoute>
-              <OrderHistory />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <Dashboard />
-            </AdminRoute>
-          }
-        >
+      <main className="bg-sky-100 text-gray-700 w-full min-h-[calc(100vh-59px)]">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/:slug" element={<Product />} />
           <Route
-            path="summary"
+            path="/shipping"
             element={
-              <AdminRoute>
-                <Summary />
-              </AdminRoute>
+              <PrivateRoute>
+                <ShippingAddress />
+              </PrivateRoute>
             }
           />
           <Route
-            path="products"
+            path="/place-order"
             element={
-              <AdminRoute>
-                <Products />
-              </AdminRoute>
+              <PrivateRoute>
+                <PlaceOrder />
+              </PrivateRoute>
             }
-          >
-            <Route
-              index
-              element={
-                <AdminRoute>
-                  <ProductList />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="new"
-              element={
-                <AdminRoute>
-                  <CreateProduct />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="edit/:id"
-              element={
-                <AdminRoute>
-                  <CreateProduct />
-                </AdminRoute>
-              }
-            />
-          </Route>
+          />
           <Route
-            path="orders"
+            path="/order/:id"
             element={
-              <AdminRoute>
-                <Orders />
-              </AdminRoute>
+              <PrivateRoute>
+                <Order />
+              </PrivateRoute>
             }
-          >
-            <Route
-              index
-              element={
-                <AdminRoute>
-                  <OrderList />
-                </AdminRoute>
-              }
-            />
-          </Route>
+          />
           <Route
-            path="users"
+            path="/order-history"
+            element={
+              <PrivateRoute>
+                <OrderHistory />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
             element={
               <AdminRoute>
-                <Users />
+                <Dashboard />
               </AdminRoute>
             }
           >
             <Route
-              index
+              path="summary"
               element={
                 <AdminRoute>
-                  <UserList />
+                  <Summary />
                 </AdminRoute>
               }
             />
             <Route
-              path="new"
+              path="products"
               element={
                 <AdminRoute>
-                  <CreateProduct />
+                  <Products />
                 </AdminRoute>
               }
-            />
+            >
+              <Route
+                index
+                element={
+                  <AdminRoute>
+                    <ProductList />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="new"
+                element={
+                  <AdminRoute>
+                    <CreateProduct />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="edit/:id"
+                element={
+                  <AdminRoute>
+                    <CreateProduct />
+                  </AdminRoute>
+                }
+              />
+            </Route>
+            <Route
+              path="orders"
+              element={
+                <AdminRoute>
+                  <Orders />
+                </AdminRoute>
+              }
+            >
+              <Route
+                index
+                element={
+                  <AdminRoute>
+                    <OrderList />
+                  </AdminRoute>
+                }
+              />
+            </Route>
+            <Route
+              path="users"
+              element={
+                <AdminRoute>
+                  <Users />
+                </AdminRoute>
+              }
+            >
+              <Route
+                index
+                element={
+                  <AdminRoute>
+                    <UserList />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="new"
+                element={
+                  <AdminRoute>
+                    <CreateProduct />
+                  </AdminRoute>
+                }
+              />
+            </Route>
           </Route>
-        </Route>
-        {/* <Route path="/checkout-success" element={<CheckoutSuccess />} /> */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
     </div>
   );
 }

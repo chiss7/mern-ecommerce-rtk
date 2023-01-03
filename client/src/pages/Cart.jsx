@@ -30,7 +30,7 @@ export const Cart = () => {
   };
 
   return (
-    <div className="bg-sky-100 min-h-[93.8vh] text-gray-700">
+    <>
       <h2 className="text-3xl text-center py-5 font-extrabold">
         Shopping Cart
       </h2>
@@ -82,9 +82,7 @@ export const Cart = () => {
                       <h3 className="overflow-ellipsis overflow-hidden whitespace-nowrap">
                         {cartItem.name}
                       </h3>
-                      <div>
-                        ${cartItem.price}
-                      </div>
+                      <div>${cartItem.price}</div>
                     </div>
                     {/* description and cat */}
                     <div>
@@ -106,11 +104,17 @@ export const Cart = () => {
                     Remove
                   </button>
                   <div className="flex w-20 sm:w-32 md:w-24 lg:w-40 lg:h-10 items-center justify-evenly border rounded-md hover:border-gray-300 transition">
-                    <button onClick={() => handleDecreaseCart(cartItem)}>
+                    <button
+                      className="w-full"
+                      onClick={() => handleDecreaseCart(cartItem)}
+                    >
                       -
                     </button>
                     <div className="font-semibold">{cartItem.cartQuantity}</div>
-                    <button onClick={() => handleIncreaseCart(cartItem)}>
+                    <button
+                      className="w-full"
+                      onClick={() => handleIncreaseCart(cartItem)}
+                    >
                       +
                     </button>
                   </div>
@@ -175,6 +179,6 @@ export const Cart = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
