@@ -34,4 +34,12 @@
   .table tbody tr:nth-child(2n+1) {
     @apply bg-sky-50
   }
+
+  /* admin sidebar */
+  .link-active {
+    @apply border-l-4 border-blue-400 pl-2 rounded-sm text-blue-400
+  }
+  .link {
+    @apply flex gap-2 items-center
+  }
 }
