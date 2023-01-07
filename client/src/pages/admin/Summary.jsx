@@ -73,8 +73,8 @@ export const Summary = () => {
       digits: users[0]?.total,
       isMoney: false,
       title: "Users",
-      color: "rgb(102, 108, 255)",
-      bgcolor: "rgba(102, 108, 255, 0.12)",
+      color: "text-[#666cff]",
+      bgcolor: "bg-[#666cff]",
       percentage: usersPerc,
     },
     {
@@ -82,8 +82,8 @@ export const Summary = () => {
       digits: orders[0]?.total,
       isMoney: false,
       title: "Orders",
-      color: "rgb(38, 198, 249)",
-      bgcolor: "rgba(38, 198, 249, 0.12)",
+      color: "text-[#26c6f9]",
+      bgcolor: "bg-[#26c6f9]",
       percentage: ordersPerc,
     },
     {
@@ -91,20 +91,20 @@ export const Summary = () => {
       digits: income[0]?.total ? income[0]?.total : "",
       isMoney: true,
       title: "Earnings",
-      color: "rgb(253, 181, 40)",
-      bgcolor: "rgba(253, 181, 40, 0.12)",
+      color: "text-[#fdb528]",
+      bgcolor: "bg-[#fdb528]",
       percentage: incomePerc,
     },
   ];
   return (
-    <div className="summary">
-      <div className="main-stats">
+    <div className="flex flex-col justify-center items-center py-5 gap-2 lg:flex-row lg:items-start xl:w-11/12 xl:m-auto">
+      <div className="bg-white w-80 min-h-[42rem] sm:w-2/3 md:w-5/6 lg:w-2/3 lg:min-h-[32rem] shadow-lg rounded-md overflow-hidden p-3">
         <div className="overview">
-          <div className="summary-title">
-            <h2>Overview</h2>
-            <p>How your shop is performing compared to the previous month.</p>
+          <div className="mb-4">
+            <h2 className="text-center font-extrabold text-2xl">Overview</h2>
+            <p className="text-center">How your shop is performing compared to the previous month.</p>
           </div>
-          <div className="widget-wrapper">
+          <div className="flex flex-col gap-2 lg:flex-row lg:justify-between">
             {data.map((data, index) => (
               <Widget key={index} data={data} />
             ))}
@@ -112,7 +112,7 @@ export const Summary = () => {
         </div>
         <Chart />
       </div>
-      <div className="side-stats">
+      <div className="bg-white w-80 min-h-[10rem] sm:w-2/3 md:w-5/6 lg:w-1/3 shadow-lg rounded-md overflow-hidden p-3">
         <Transactions />
         <AllTimeData />
       </div>

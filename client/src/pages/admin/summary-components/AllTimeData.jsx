@@ -27,23 +27,23 @@ const AllTimeData = () => {
   }
 
   return (
-    <div className="all-data-main">
-      <h3>All Time</h3>
-      <div className="all-data-info">
+    <div className="mt-4 mb-4">
+      <h3 className="text-2xl font-extrabold text-center">All Time</h3>
+      <div className="flex justify-between bg-sky-300/60 rounded-md mb-2 p-2">
         <div className="all-data-title">Users</div>
-        <div className="all-data-data">{!loadingUsers ? users.length : "-"}</div>
+        <div className="font-bold">{!loadingUsers ? users.length : "-"}</div>
       </div>
-      <div className="all-data-info">
+      <div className="flex justify-between bg-sky-300/60 rounded-md mb-2 p-2">
         <div className="all-data-title">Products</div>
-        <div className="all-data-data">{!isLoading ? data.length : "-"}</div>
+        <div className="font-bold">{!isLoading ? data.length : "-"}</div>
       </div>
-      <div className="all-data-info">
+      <div className="flex justify-between bg-sky-300/60 rounded-md mb-2 p-2">
         <div className="all-data-title">Orders</div>
-        <div className="all-data-data">{!loadingOrders ? orders.length : "-"}</div>
+        <div className="font-bold">{!loadingOrders ? orders.length : "-"}</div>
       </div>
-      <div className="all-data-info">
+      <div className="flex justify-between bg-sky-300/60 rounded-md mb-2 p-2">
         <div className="all-data-title">Earnings</div>
-        <div className="all-data-data">${getEarnings().toLocaleString()}</div>
+        <div className="font-bold">${getEarnings().toLocaleString()}</div>
       </div>
     </div>
   );

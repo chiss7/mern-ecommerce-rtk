@@ -27,12 +27,12 @@ const Transactions = () => {
         <p>Transactions Loading...</p>
       ) : (
         <>
-          <h3>Lastest transactions</h3>
+          <h3 className="font-extrabold text-center text-2xl">Lastest transactions</h3>
           {orders?.map((order) => (
-            <div className="transaction" key={order._id}>
-              <p>{order.shippingAddress.fullName}</p>
-              <p>${order.totalPrice.toLocaleString()}</p>
-              <p>{moment(order.createdAt).fromNow()}</p>
+            <div className="flex justify-between bg-sky-300/60 mb-2 rounded-md p-2" key={order._id}>
+              <p className="w-1/3">{order.shippingAddress.fullName}</p>
+              <p className="w-1/3 text-center">${order.totalPrice.toLocaleString()}</p>
+              <p className="w-1/3 text-right">{moment(order.createdAt).fromNow()}</p>
             </div>
           ))}
         </>

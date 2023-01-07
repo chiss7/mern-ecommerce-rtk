@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { getWeekSalesRequest } from "../../../redux/api";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 const Chart = () => {
   const [sales, setSales] = useState([]);
@@ -52,10 +53,12 @@ const Chart = () => {
   return (
     <>
       {loading ? (
-        <p className="loader">Loading Chart ...</p>
+        <div className="flex justify-center mt-10">
+          <LoadingSpinner msg={'Loading Chart'} />
+        </div>
       ) : (
-        <div className="chart">
-          <h3>Last 7 days Earnings (USD)</h3>
+        <div className="w-full h-80 mt-7 p-4">
+          <h3 className="font-extrabold text-2xl text-center">Last 7 days Earnings (USD)</h3>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               width={500}
