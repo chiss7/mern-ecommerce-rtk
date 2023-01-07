@@ -71,8 +71,7 @@ const ProductController = {
     }
   },
   updateProduct: async (req, res) => {
-    console.log(req.body)
-    /* try {
+    try {
       const updatedProduct = await Product.findByIdAndUpdate(
         req.params.id,
         req.body,
@@ -84,7 +83,7 @@ const ProductController = {
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ message: "Something went wrong" });
-    } */
+    } 
   },
 };
 

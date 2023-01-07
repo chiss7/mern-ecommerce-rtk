@@ -37,6 +37,15 @@ export const productApi = createApi({
         url: `/product/${slug}`,
       }),
     }),
+    getProductById: builder.query({
+      query: (id) => ({
+        url: `/product/${id}`,
+        headers: {
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+        },
+      }),
+    }),
   }),
 });
 
@@ -45,4 +54,5 @@ export const {
   useGetOrderByIdQuery,
   useGetOrdersByUserQuery,
   useGetProductBySlugQuery,
+  useGetProductByIdQuery,
 } = productApi;

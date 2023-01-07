@@ -60,9 +60,9 @@ export const deleteProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "product/updateProduct",
-  async ({ id, form, toast, navigate }, { rejectWithValue }) => {
+  async ({ id, formForUpdate, toast, navigate }, { rejectWithValue }) => {
     try {
-      const res = await updateProductRequest(id, form);
+      const res = await updateProductRequest(id, formForUpdate);
       toast.success("Product updated successfully");
       navigate("/admin/products");
       return res.data;
