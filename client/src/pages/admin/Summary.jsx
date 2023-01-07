@@ -97,7 +97,7 @@ export const Summary = () => {
     },
   ];
   return (
-    <div className="flex flex-col justify-center items-center py-5 gap-2 lg:flex-row lg:items-start xl:w-11/12 xl:m-auto">
+    <div className="flex flex-col justify-center items-center py-5 gap-2 lg:flex-row lg:items-start xl:w-9/12 xl:m-auto">
       <div className="bg-white w-80 min-h-[42rem] sm:w-2/3 md:w-5/6 lg:w-2/3 lg:min-h-[32rem] shadow-lg rounded-md overflow-hidden p-3">
         <div className="overview">
           <div className="mb-4">

@@ -29,7 +29,7 @@ const Transactions = () => {
         <>
           <h3 className="font-extrabold text-center text-2xl">Lastest transactions</h3>
           {orders?.map((order) => (
-            <div className="flex justify-between bg-sky-300/60 mb-2 rounded-md p-2" key={order._id}>
+            <div className="flex justify-between bg-sky-300/60 even:bg-sky-300/40 mb-2 rounded-md p-2" key={order._id}>
               <p className="w-1/3">{order.shippingAddress.fullName}</p>
               <p className="w-1/3 text-center">${order.totalPrice.toLocaleString()}</p>
               <p className="w-1/3 text-right">{moment(order.createdAt).fromNow()}</p>

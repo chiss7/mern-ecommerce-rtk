@@ -7,6 +7,7 @@ import {
 } from "../../../redux/features/productSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const ProductList = () => {
           pName: item.name,
           pDesc: item.description,
           price: item.price.toLocaleString(),
+          slug: item.slug,
         };
       })
     : null;
@@ -52,7 +54,7 @@ const ProductList = () => {
     {
       field: "pDesc",
       headerName: "Description",
-      width: 300,
+      width: 350,
     },
     {
       field: "price",
@@ -63,24 +65,25 @@ const ProductList = () => {
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 180,
+      width: 300,
       renderCell: (params) => {
         return (
-          <div className="actions">
+          <div className="flex justify-between w-full">
             <button
-              className="delete"
+              className="button-red"
               onClick={() => handleDelete(params.row.id)}
             >
               {loading ? "..." : "Delete"}
             </button>
             <button
+              className="button-primary"
               onClick={() => navigate(`/admin/products/edit/${params.row.id}`)}
             >
               Edit
             </button>
             <button
-              className="view"
-              onClick={() => navigate(`/product/${params.row.id}`)}
+              className="button-green"
+              onClick={() => navigate(`/${params.row.slug}`)}
             >
               View
             </button>
@@ -91,9 +94,11 @@ const ProductList = () => {
   ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div className='h-96 w-11/12 m-auto'>
       {loading ? (
-        "Loading Table..."
+        <div className="flex justify-center">
+          <LoadingSpinner msg={'Loading...'} />
+        </div>
       ) : (
         <DataGrid
           rows={rows}

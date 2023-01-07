@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { createProduct } from "../../redux/features/productSlice";
 
 export const CreateProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.product);
+  const { error, loading } = useSelector((state) => state.product);
   const [form, setForm] = useState({
     image: null,
     name: "",
@@ -66,15 +67,16 @@ export const CreateProduct = () => {
   }, [error]);
 
   return (
-    <div className="createProduct-container">
-      <form className="createProduct-form" onSubmit={handleSubmit}>
-        <h3>Create a Product</h3>
+    <div className="min-h-[calc(100vh-160px)] flex flex-col justify-center items-center md:flex-row md:items-start">
+      <form className="bg-white w-4/5 md:w-1/2 min-h-[10rem] shadow-lg rounded-md overflow-hidden p-5 flex flex-col gap-5 items-center" onSubmit={handleSubmit}>
+        <h3 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap text-center">Create a Product</h3>
         <input
           type="file"
           name="image"
           accept="image/"
           required
           onChange={handleChange}
+          className="input"
         />
         <input
           type="text"
@@ -82,6 +84,7 @@ export const CreateProduct = () => {
           onChange={handleChange}
           required
           placeholder="Name"
+          className="input"
         />
         <input
           type="text"
@@ -89,8 +92,9 @@ export const CreateProduct = () => {
           onChange={handleChange}
           required
           placeholder="Slug"
+          className="input"
         />
-        <select onChange={handleChange} name="brand" required>
+        <select onChange={handleChange} name="brand" required className="input">
           <option value="">Select Brand</option>
           <option value="puma">Puma</option>
           <option value="nike">Nike</option>
@@ -103,8 +107,9 @@ export const CreateProduct = () => {
           onChange={handleChange}
           required
           placeholder="Description"
+          className="input"
         />
-        <select onChange={handleChange} name="category" required>
+        <select onChange={handleChange} name="category" required className="input">
           <option value="">Select Category</option>
           <option value="shoes">Shoes</option>
           <option value="t-shirt">T-shirt</option>
@@ -118,6 +123,7 @@ export const CreateProduct = () => {
           required
           min={0}
           placeholder="Price"
+          className="input"
         />
         <input
           type="number"
@@ -126,6 +132,7 @@ export const CreateProduct = () => {
           required
           min={0}
           placeholder="Stock"
+          className="input"
         />
         <input
           type="number"
@@ -135,13 +142,23 @@ export const CreateProduct = () => {
           min={0}
           max={5}
           placeholder="Rating"
+          className="input"
         />
-        <button className="primary-button">Submit</button>
+        {loading ? (
+          <button
+            className="button-primary w-full flex justify-center items-center"
+            disabled
+          >
+            <LoadingSpinner /> Submitting...
+          </button>
+        ) : (
+          <button className="button-primary w-full">Submit</button>
+        )}
       </form>
-      <div className="image-preview">
+      <div className="my-5 p-5 md:w-1/2">
         {form.image ? (
           <>
-            <img src={imagePreview} alt="productImg" />
+            <img src={imagePreview} alt="productImg" className="w-full h-full object-cover hover:shadow-lg transition" />
           </>
         ) : (
           <p>Image preview will appear here!</p>
