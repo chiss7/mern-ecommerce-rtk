@@ -16,6 +16,7 @@ export const Cart = () => {
   const handleRemoveFromCart = (cartItem) => {
     dispatch(removeFromCart(cartItem));
   };
+  console.log("hi");
 
   const handleClearCart = () => {
     dispatch(clearCart());
