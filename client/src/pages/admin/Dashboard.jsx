@@ -6,8 +6,10 @@ export const Dashboard = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex">
-      <div className="fixed bg-sky-800 rounded-r-3xl pt-1">
+    <div className="flex flex-col sm:flex-row">
+
+      {/* flange */}
+      <div className="absolute bg-sky-800 max-sm:rounded-b-3xl sm:rounded-r-3xl pt-1">
         <button onClick={() => setOpen(true)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,14 +29,18 @@ export const Dashboard = () => {
           </svg>
         </button>
       </div>
-      
+
       {/* aside */}
       <aside
-        className={`bg-sky-800 w-72 min-h-[calc(100vh-59px)] text-white py-6 relative top-0 left-0 transition-all duration-300 ${
-          open ? "w-72" : "w-0"
+        className={`bg-sky-800 w-screen max-sm:h-64 sm:w-72 sm:min-h-[calc(100vh-59px)] text-white py-6 relative top-0 left-0 ${
+          open ? "w-screen sm:w-75" : "hidden"
         }`}
       >
-        <div className={`pb-3 flex items-center justify-evenly text-center text-xl font-bold ${!open && 'hidden'}`}>
+        <div
+          className={`pb-2 sm:pb-3 flex items-center justify-around sm:justify-evenly text-center text-xl font-bold ${
+            !open && "hidden"
+          }`}
+        >
           <h3>Quick Links</h3>
           <button className="m-3" onClick={() => setOpen(false)}>
             <svg
@@ -55,7 +61,7 @@ export const Dashboard = () => {
             </svg>
           </button>
         </div>
-        <div className={`flex flex-col gap-3 px-6 ${!open && 'hidden'}`}>
+        <div className={`flex flex-col gap-3 w-32 m-auto ${!open && "hidden"}`}>
           <NavLink
             to="/admin/summary"
             className={({ isActive }) =>

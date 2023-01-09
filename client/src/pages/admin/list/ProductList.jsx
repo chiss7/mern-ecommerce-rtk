@@ -94,7 +94,7 @@ const ProductList = () => {
   ];
 
   return (
-    <div className="w-11/12 h-96 m-auto">
+    <div className="w-11/12 h-[25rem] m-auto">
       {loading ? (
         <div className="flex justify-center">
           <LoadingSpinner msg={"Loading..."} />
@@ -107,6 +107,7 @@ const ProductList = () => {
           rowsPerPageOptions={[5]}
           checkboxSelection
           disableSelectionOnClick
+          className="bg-white/50"
         />
       )}
     </div>
