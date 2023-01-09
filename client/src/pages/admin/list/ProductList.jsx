@@ -6,8 +6,8 @@ import {
   getProducts,
 } from "../../../redux/features/productSlice";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 import LoadingSpinner from "../../../components/LoadingSpinner";
+import { useEffect } from "react";
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -94,10 +94,10 @@ const ProductList = () => {
   ];
 
   return (
-    <div className='h-96 w-11/12 m-auto'>
+    <div className="w-11/12 h-96 m-auto">
       {loading ? (
         <div className="flex justify-center">
-          <LoadingSpinner msg={'Loading...'} />
+          <LoadingSpinner msg={"Loading..."} />
         </div>
       ) : (
         <DataGrid

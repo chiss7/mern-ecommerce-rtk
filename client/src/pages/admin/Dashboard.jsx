@@ -27,14 +27,16 @@ export const Dashboard = () => {
           </svg>
         </button>
       </div>
-      {/* blur cape */}
-      <div
-        className={`bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm ${
-          !open && "hidden"
+      
+      {/* aside */}
+      <aside
+        className={`bg-sky-800 w-72 min-h-[calc(100vh-59px)] text-white py-6 relative top-0 left-0 transition-all duration-300 ${
+          open ? "w-72" : "w-0"
         }`}
-        onClick={() => setOpen(false)}
       >
-        <button className="top-0 right-0 fixed m-3" onClick={() => setOpen(false)}>
+        <div className={`pb-3 flex items-center justify-evenly text-center text-xl font-bold ${!open && 'hidden'}`}>
+          <h3>Quick Links</h3>
+          <button className="m-3" onClick={() => setOpen(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="icon icon-tabler icon-tabler-x"
@@ -52,15 +54,6 @@ export const Dashboard = () => {
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
-      </div>
-      {/* aside */}
-      <aside
-        className={`bg-sky-800 w-72 min-h-screen text-white py-6 fixed top-0 left-0 transition-all duration-300 ${
-          open ? "w-72" : "w-0"
-        }`}
-      >
-        <div className={`pb-3 text-center text-xl font-bold ${!open && 'hidden'}`}>
-          <h3>Quick Links</h3>
         </div>
         <div className={`flex flex-col gap-3 px-6 ${!open && 'hidden'}`}>
           <NavLink

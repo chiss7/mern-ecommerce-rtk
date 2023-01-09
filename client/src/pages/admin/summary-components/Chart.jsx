@@ -61,6 +61,7 @@ const Chart = () => {
           <h3 className="font-extrabold text-2xl text-center">Last 7 days Earnings (USD)</h3>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
+              className=""
               width={500}
               height={300}
               data={sales}
