@@ -29,7 +29,7 @@ export const Auth = {
     }
   },
   register: async (req, res) => {
-    const { email, password, firstName, lastName, isAdmin } = req.body;
+    const { email, password, firstName, lastName, isAdmin, name } = req.body;
     try {
       const oldUser = await User.findOne({ email });
       if (oldUser)
@@ -38,7 +38,7 @@ export const Auth = {
       const hashed = await bcrypt.hash(password, salt);
       const code = uuidv4();
       const user = await User.create({
-        name: `${firstName} ${lastName}`,
+        name: name ? name : `${firstName} ${lastName}`,
         email,
         password: hashed,
         isAdmin,
@@ -63,20 +63,43 @@ export const Auth = {
   },
   updateUser: async (req, res) => {
     try {
-      const user = await User.findById(req.userId);
-      if (user) {
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
+      if (req.params.id) {
+        // update user profile as admin
         if (req.body.password) {
           const salt = await bcrypt.genSalt();
           const hashed = await bcrypt.hash(req.body.password, salt);
-          user.password = hashed;
+          req.body.password = hashed;
         }
-        const updatedUser = await user.save();
-        const signed = signToken(updatedUser._id, updatedUser.isAdmin, updatedUser.code);
-        return res.json({ result: updatedUser, signed });
+        const userUpdated = await User.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          {
+            new: true,
+          }
+        );
+        if (!userUpdated)
+          return res.status(404).json({ message: "User not found" });
+        return res.status(200).json(userUpdated);
+      } else {
+        // update user profile
+        if (req.body.password) {
+          const salt = await bcrypt.genSalt();
+          const hashed = await bcrypt.hash(req.body.password, salt);
+          req.body.password = hashed;
+        }
+        delete req.body["confirmPassword"];
+        const userUpdated = await User.findByIdAndUpdate(req.userId, req.body, {
+          new: true,
+        });
+        if (!userUpdated)
+          return res.status(404).json({ message: "User not found" });
+        const signed = signToken(
+          userUpdated._id,
+          userUpdated.isAdmin,
+          userUpdated.code
+        );
+        return res.json({ result: userUpdated, signed });
       }
-      return res.status(404).json({ message: "User not found" });
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ message: "Something went wrong" });
@@ -116,6 +139,27 @@ export const Auth = {
       if (!users)
         return res.status(404).json({ message: "There is no user yet" });
       res.status(200).json(users);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const deletedUser = await User.findByIdAndDelete(req.params.id);
+      if (!deletedUser)
+        return res.status(404).json({ message: "User not found" });
+      return res.status(200).json(deletedUser);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+  getUserById: async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) return res.status(404).json({ message: "User not found" });
+      return res.status(200).json(user);
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ message: "Something went wrong" });

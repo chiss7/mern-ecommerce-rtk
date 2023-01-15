@@ -7,6 +7,7 @@ import AdminRoute from "./components/AdminRoute";
 import {
   Cart,
   CreateProduct,
+  CreateUser,
   Dashboard,
   Home,
   Login,
@@ -183,7 +184,15 @@ function App() {
                 path="new"
                 element={
                   <AdminRoute>
-                    <CreateProduct />
+                    <CreateUser />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="edit/:id"
+                element={
+                  <AdminRoute>
+                    <CreateUser />
                   </AdminRoute>
                 }
               />

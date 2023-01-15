@@ -63,7 +63,6 @@ export const Profile = () => {
           name="password"
           placeholder="Password"
           onChange={handleChange}
-          value={form.password}
           className="input"
         />
         <input
@@ -71,7 +70,6 @@ export const Profile = () => {
           name="confirmPassword"
           placeholder="Confirm Password"
           onChange={handleChange}
-          value={form.confirmPassword}
           className="input"
         />
         {loading ? (

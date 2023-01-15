@@ -33,7 +33,7 @@ export const updateProductRequest = (id, form) =>
 
 export const loginRequest = (user) => API.post("/users/login", user);
 export const registerRequest = (user) => API.post("/users/register", user);
-export const updateUserRequest = (values) => API.put("/users/profile", values);
+export const updateUserRequest = (values) => API.patch("/users/profile", values);
 export const getUserStatsRequest = () => API.get("/users/stats");
 export const getUsersRequest = () => API.get("/users");
 

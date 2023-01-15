@@ -18,8 +18,7 @@ export const productApi = createApi({
       query: (id) => ({
         url: `/orders/${id}`,
         headers: {
-          Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
         },
       }),
     }),
@@ -27,8 +26,7 @@ export const productApi = createApi({
       query: () => ({
         url: "/orders/mine",
         headers: {
-          Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
         },
       }),
     }),
@@ -36,8 +34,7 @@ export const productApi = createApi({
       query: (id) => ({
         url: `/product/${id}`,
         headers: {
-          Authorization:
-            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+          Authorization: "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
         },
       }),
     }),
