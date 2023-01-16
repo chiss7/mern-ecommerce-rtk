@@ -14,27 +14,12 @@ export const productApi = createApi({
     getAllProducts: builder.query({
       query: () => "/product",
     }),
-    getOrderById: builder.query({
-      query: (id) => ({
-        url: `/orders/${id}`,
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
-        },
-      }),
-    }),
-    getOrdersByUser: builder.query({
-      query: () => ({
-        url: "/orders/mine",
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
-        },
-      }),
-    }),
     getProductById: builder.query({
       query: (id) => ({
         url: `/product/${id}`,
         headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
         },
       }),
     }),
@@ -48,8 +33,6 @@ export const productApi = createApi({
 
 export const {
   useGetAllProductsQuery,
-  useGetOrderByIdQuery,
-  useGetOrdersByUserQuery,
   useGetProductBySlugQuery,
   useGetProductByIdQuery,
 } = productApi;

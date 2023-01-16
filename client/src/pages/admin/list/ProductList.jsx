@@ -12,7 +12,11 @@ import { useEffect } from "react";
 const ProductList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { products: data, loading } = useSelector((state) => state.product);
+  const {
+    products: data,
+    loading,
+    error,
+  } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -95,7 +99,9 @@ const ProductList = () => {
 
   return (
     <div className="w-11/12 h-[25rem] m-auto">
-      {loading ? (
+      {error ? (
+        <div className="text-red-500">Error: {error.message}</div>
+      ) : loading ? (
         <div className="flex justify-center">
           <LoadingSpinner msg={"Loading..."} />
         </div>

@@ -43,6 +43,24 @@ export const orderApi = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    getOrderById: builder.query({
+      query: (id) => ({
+        url: `/orders/${id}`,
+        headers: {
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+        },
+      }),
+    }),
+    getOrdersByUser: builder.query({
+      query: () => ({
+        url: "/orders/mine",
+        headers: {
+          Authorization:
+            "Bearer " + JSON.parse(localStorage.getItem("profile")).signed,
+        },
+      }),
+    }),
   }),
 });
 
@@ -50,4 +68,6 @@ export const {
   useGetOrdersQuery,
   useUpdateOrderMutation,
   useDeleteOrderMutation,
+  useGetOrderByIdQuery,
+  useGetOrdersByUserQuery,
 } = orderApi;

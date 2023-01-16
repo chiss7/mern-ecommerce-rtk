@@ -8,20 +8,17 @@ import {
 } from "../../../redux/features/userApi";
 
 const UserList = () => {
-  const { data, isLoading: isLoadingFetch } = useGetAllUsersQuery();
-  const [
-    deleteUser,
-    { isLoading: isLoadingDelete, isError: isErrorDelete, error: errorDelete },
-  ] = useDeleteUserMutation();
+  const {
+    data,
+    isLoading: isLoadingFetch,
+    error: errorFetch,
+  } = useGetAllUsersQuery();
+  const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
   const navigate = useNavigate();
 
   const handleDelete = (id) => {
-    if (isErrorDelete) {
-      toast.error(`Delete user ${id} failed, ${errorDelete.message}`);
-    } else {
-      deleteUser(id);
-      toast.success("User deleted successfully");
-    }
+    deleteUser(id);
+    toast.success("User deleted successfully");
   };
 
   const rows = data
@@ -116,7 +113,9 @@ const UserList = () => {
 
   return (
     <div className="w-11/12 h-[25rem] m-auto">
-      {isLoadingFetch ? (
+      {errorFetch ? (
+        <div className="text-red-500">Error: {errorFetch.error}</div>
+      ) : isLoadingFetch ? (
         <div className="flex justify-center">
           <LoadingSpinner msg={"Loading..."} />
         </div>

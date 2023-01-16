@@ -8,7 +8,11 @@ import {
 } from "../../../redux/features/orderApi";
 
 const OrderList = () => {
-  const { data, isLoading: isLoadingFetch } = useGetOrdersQuery(undefined, {
+  const {
+    data,
+    isLoading: isLoadingFetch,
+    error,
+  } = useGetOrdersQuery(undefined, {
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
     refetchOnReconnect: true,
@@ -128,7 +132,9 @@ const OrderList = () => {
 
   return (
     <div className="w-11/12 h-[25rem] m-auto">
-      {isLoadingFetch ? (
+      {error ? (
+        <div className="text-red-500">Error: {error.error}</div>
+      ) : isLoadingFetch ? (
         <div className="flex justify-center">
           <LoadingSpinner msg={"Loading..."} />
         </div>

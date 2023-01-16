@@ -5,14 +5,12 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { approvePay, payReset } from "../redux/features/paySlice";
-//import { getOrder } from "../redux/features/orderSlice";
-import { useGetOrderByIdQuery } from "../redux/features/productApi";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useGetOrderByIdQuery } from "../redux/features/orderApi";
 
 export const Order = () => {
   const dispatch = useDispatch();
   const { id: orderId } = useParams();
-  //const { order, loading, error } = useSelector((state) => state.order);
   const {
     data: order,
     error,

@@ -23,8 +23,6 @@ export const OrderHistory = () => {
     // eslint-disable-next-line
   }, []);
 
-  console.log(orders)
-
   return loading ? (
     <div className="h-[calc(100vh-59px)] flex items-center justify-center py-5">
       <LoadingSpinner msg="Loading..." />
