@@ -11,6 +11,8 @@ router.get("/stats", isAdmin, placeOrder.getStats);
 router.get("/income/stats", isAdmin, placeOrder.getIncomeStats);
 router.get("/week-sales", isAdmin, placeOrder.getWeekSales);
 router.get("/:id", auth, placeOrder.getOrderById);
+router.patch("/:id", isAdmin, placeOrder.updateOrder);
+router.delete("/:id", isAdmin, placeOrder.deleteOrder);
 router.put("/:id/pay", auth, placeOrder.approvePay);
 
 export default router;

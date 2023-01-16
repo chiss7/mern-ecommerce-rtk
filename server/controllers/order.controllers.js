@@ -192,4 +192,32 @@ export const placeOrder = {
       return res.status(500).json({ message: "Something went wrong" });
     }
   },
+  updateOrder: async (req, res) => {
+    try {
+      const orderUpdated = await Order.findByIdAndUpdate(
+        req.params.id,
+        req.body.isDelivered
+          ? Object.assign(req.body, { deliveredAt: Date.now() })
+          : { $unset: { deliveredAt: 1 }, $set: req.body },
+        { new: true }
+      );
+      if (!orderUpdated)
+        return res.status(404).json({ message: "Order not found" });
+      return res.status(200).json(orderUpdated);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
+  deleteOrder: async (req, res) => {
+    try {
+      const orderDeleted = await Order.findByIdAndDelete(req.params.id);
+      if (!orderDeleted)
+        return res.status(404).json({ message: "Order not found" });
+      return res.status(200).json(orderDeleted);
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  },
 };
